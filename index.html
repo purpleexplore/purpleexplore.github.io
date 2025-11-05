@@ -3,10 +3,17 @@
 <head>
     <meta charset="utf-8" />
     <script>
-        // Safari兼容性：在HTML解析的最早时机就禁用滚动恢复和设置滚动位置
+        // Safari兼容性：在HTML解析的最早时机就禁用滚动恢复
         if ('scrollRestoration' in history) {
             history.scrollRestoration = 'manual';
         }
+        // 立即设置滚动位置
+        try {
+            window.scrollTo(0, 0);
+            if (window.pageYOffset !== 0 || window.scrollY !== 0) {
+                document.documentElement.scrollTop = 0;
+            }
+        } catch(e) {}
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>somo 有时</title>
@@ -29,7 +36,7 @@
     <script src="js/script.js"></script>
     <script type="text/javascript" src="http://cdn1.foundertype.com/webfont/js/ftfont-init.js"></script>
 </head>
-<body>
+<body style="position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; overflow: hidden !important; width: 100% !important;">
 <script>
     // Safari兼容性：body标签加载后立即设置滚动位置
     window.scrollTo(0, 0);

@@ -78,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!document.body.classList.contains('ready')) {
         console.log('强制恢复滚动：添加ready类');
         document.body.classList.add('ready');
+        document.body.removeAttribute('style');
         showPageContent();
     }
 }, 2000); // 2秒后强制恢复滚动
@@ -100,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!document.body.classList.contains('ready')) {
             console.log('页面重新可见时强制恢复滚动');
             document.body.classList.add('ready');
+            document.body.removeAttribute('style');
             showPageContent();
         }
         
@@ -275,6 +277,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 添加ready类，恢复正常滚动
     document.body.classList.add('ready');
+    // Safari兼容性：移除body上的内联样式，让CSS类生效
+    document.body.removeAttribute('style');
     console.log('Ready类已添加，页面滚动已恢复');
     
     // Safari兼容性：确保页面在顶部
@@ -293,6 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.forceScroll = () => {
         console.log('手动强制恢复滚动');
         document.body.classList.add('ready');
+        document.body.removeAttribute('style');
         showPageContent();
         window.scrollTo(0, 0);
     };
