@@ -34,23 +34,27 @@ body {
     font-weight: 400;
     color: var(--text);
     overflow-x: hidden;
-    overflow-y: auto;
     scroll-padding-top: var(--header-h); /* 有固定头部时，避免被顶到头部下面 */
     overscroll-behavior-y: contain;  /* 防止拉出回弹 */
     -webkit-overflow-scrolling: touch; /* iOS 惯性滚动 */
     height: 100vh; /* 确保body有固定高度 */
+    /* Safari兼容性：默认固定状态，防止刷新时闪烁 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    width: 100%;
 }
 
-/* 页面加载时固定在顶部，防止上滑 - Safari兼容性增强 */
-body.loading {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    overflow: hidden !important;
-    width: 100% !important;
-    height: 100vh !important;
+/* 当页面ready后，恢复正常滚动 */
+body.ready {
+    position: static;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: auto;
+    height: 100vh;
 }
 
 /* 把每一屏设为“页面块” */

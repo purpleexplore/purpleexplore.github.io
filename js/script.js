@@ -13,10 +13,7 @@ if ('scrollRestoration' in history) {
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 页面加载时固定在顶部，防止上滑
-    document.body.classList.add('loading');
-    
-    // Safari特别处理：强制滚动到顶部并禁止滚动
+    // Safari特别处理：确保滚动位置在顶部
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
@@ -27,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // 添加调试信息
-    console.log('页面加载开始，添加loading类');
+    console.log('页面加载开始');
     
     const logo = document.getElementById('logoBlur');
     const PNG_SRC = 'assets/whiteLogo.png';                // ← 改成你的 PNG 路径
@@ -76,11 +73,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 }, 3000); // 3秒后强制清理所有dots和logo-blur
 
-    // 强制恢复滚动机制：确保loading类一定会被移除
+    // 强制恢复滚动机制：确保页面一定会恢复滚动
     setTimeout(() => {
-    if (document.body.classList.contains('loading')) {
-        console.log('强制恢复滚动：移除loading类');
-        document.body.classList.remove('loading');
+    if (!document.body.classList.contains('ready')) {
+        console.log('强制恢复滚动：添加ready类');
+        document.body.classList.add('ready');
         showPageContent();
     }
 }, 2000); // 2秒后强制恢复滚动
@@ -99,10 +96,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         
-        // 确保loading类被移除，恢复滚动
-        if (document.body.classList.contains('loading')) {
+        // 确保页面恢复滚动
+        if (!document.body.classList.contains('ready')) {
             console.log('页面重新可见时强制恢复滚动');
-            document.body.classList.remove('loading');
+            document.body.classList.add('ready');
             showPageContent();
         }
         
@@ -123,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
         window.scrollTo(0, 0);
         document.documentElement.scrollTop = 0;
         document.body.scrollTop = 0;
-        document.body.classList.add('loading');
     });
 
     // Safari兼容性：页面显示时（包括从后退按钮返回）确保在顶部
@@ -277,9 +273,9 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('滚动指示器显示动画已触发');
 }
 
-    // 移除loading类，恢复正常滚动
-    document.body.classList.remove('loading');
-    console.log('Loading类已移除，页面滚动已恢复');
+    // 添加ready类，恢复正常滚动
+    document.body.classList.add('ready');
+    console.log('Ready类已添加，页面滚动已恢复');
     
     // Safari兼容性：确保页面在顶部
     setTimeout(() => {
@@ -296,7 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 可手动在控制台调用 window.forceScroll() 强制恢复滚动
     window.forceScroll = () => {
         console.log('手动强制恢复滚动');
-        document.body.classList.remove('loading');
+        document.body.classList.add('ready');
         showPageContent();
         window.scrollTo(0, 0);
     };
