@@ -1,0 +1,892 @@
+:root {
+    --dot-overlap: 8px;
+    --text: rgba(255,255,255,0.96);
+    --muted: rgba(255,255,255,0.75);
+    --text-dark: rgba(128,162,170,1);
+    --button-bg: rgba(255,255,255,0.16);
+    --button-border: rgba(255,255,255,0.35);
+    --button-hover: rgba(255,255,255,0.22);
+    --text-size-title:clamp(28px, 4vw, 40px);
+    --text-size-subtitle:clamp(14px, 1.4vw, 16px);
+    --header-h: 0px;
+
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; scroll-snap-type:y mandatory;scroll-behavior: smooth; }
+body {
+    padding: 0;
+    font-family: 'FZYouHJW_509R', 'tt-commons-pro', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    color: var(--text);
+    overflow-x: hidden;
+    overflow-y: auto;
+    scroll-padding-top: var(--header-h); /* 有固定头部时，避免被顶到头部下面 */
+    overscroll-behavior-y: contain;  /* 防止拉出回弹 */
+    -webkit-overflow-scrolling: touch; /* iOS 惯性滚动 */
+    height: 100vh; /* 确保body有固定高度 */
+}
+
+/* 页面加载时固定在顶部，防止上滑 */
+body.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+
+/* 把每一屏设为“页面块” */
+.hero,
+.step1-section,
+.image-slider-section,
+.scatter-gallery,
+.info-page {
+    min-height: 100vh;           /* 每屏占满视口高度 */
+    scroll-snap-align: start;    /* 吸附到容器顶部 */
+    scroll-snap-stop: always;    /* 快速滚时也逐屏停靠（更稳）*/
+    display: block;              /* 确保 div/section 都是块级 */
+}
+
+#bg {
+    position: fixed;    /* 全屏盖在页面上 */
+    inset: 0;           /* top/right/bottom/left 全为 0 */
+    z-index: 0;         /* 背景层 */
+    pointer-events: none; /* 不挡交互 */
+    animation: slowBackground 8s linear infinite;
+}
+
+/* 减慢背景动画速度 */
+@keyframes slowBackground {
+    0% {
+        animation-timing-function: linear;
+    }
+    100% {
+        animation-timing-function: linear;
+    }
+}
+
+/* 通过CSS减慢canvas动画 */
+#colorbgcanvas {
+    animation: slowCanvas 12s linear infinite;
+}
+
+@keyframes slowCanvas {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.02);
+        opacity: 0.98;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.site-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+    font-size: clamp(14px, 1.4vw, 16px);
+    color: var(--muted);
+    font-weight: 400;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    /*outline:green dashed 1px;*/
+}
+.nav-left { position: absolute; left: 32px; color: var(--text); text-decoration: none; filter: blur(0);opacity: .95; }
+.nav-right { position: absolute; right: 32px; color: var(--text); text-decoration: none; filter: blur(0);opacity: .95; }
+
+/* 只在非触摸设备上显示hover效果 */
+@media (hover: hover) {
+    .nav-left:hover, .nav-right:hover { filter: blur(2px) }
+}
+
+/* 点击效果 */
+.nav-left.clicked {
+    filter: blur(2px);
+    transform: scale(0.95);
+    transition: all 0.1s ease;
+}
+
+.hero { height: 100vh; display: grid; place-items: center; text-align: center; position: relative;z-index: 1 }
+
+
+/* —— 整组从右→左 progressive blur —— */
+.logo-blur{
+    /* 可调参数 */
+    --blur-left: 10px;      /* 最左端模糊半径 */
+    --dot-overlap: 3px;     /* 两点重叠量，可按需改 */
+    position: fixed;        /* 改为fixed定位，独立于header */
+    top: 50%;               /* 在header区域垂直居中 */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 0;                 /* 用负 margin 做重叠，所以 gap 设 0 */
+    opacity: .9;
+    /*outline:red solid 1px;*/
+    z-index: 1000;          /* 确保在header之上 */
+    /* 关键：设置围自身中心旋转 */
+    transform-origin: 50% 50%;
+    /* 你的进场动画可保留 */
+    animation: logoDrop 1500ms cubic-bezier(.22,1,.36,1) both;
+    animation-iteration-count: 1;
+    will-change: top, transform, opacity;
+
+    isolation: isolate;     /* 让伪元素的 backdrop 只作用当前容器 */
+}
+/* 两个圆的淡出 */
+.logo-blur .fade-out {
+    opacity: 0;
+    transition: opacity .25s ease;
+}
+/* 圆点自身（确保它们能画出来） */
+.logo-blur .dot{
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    filter: blur(2px);
+    background: rgba(255,255,255,.95);
+    will-change: filter, transform;
+}
+.logo-blur .dot + .dot{
+    margin-left: calc(-1 * var(--dot-overlap));
+    filter: blur(1px);
+    z-index: 1; /* 需要右侧盖在上面的话保留这句 */
+    will-change: filter, transform;
+}
+
+/* PNG 的样式 */
+.logo-static {
+    display: block;
+    width: auto;          /* 宽度用 JS 计算后塞进 style */
+    height: auto;
+    opacity: 0;
+    transition: opacity .35s ease;
+    /*outline:blue dashed 1px;*/
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(calc(-50% - 3px), -50%); /* 向左偏移1像素 */
+    pointer-events: none;
+    z-index: 2;
+}
+
+
+
+/* 切换完成变为静态态（防止二次播放） */
+.logo-blur.is-static { animation: none; }
+.logo-blur.is-static .dot { animation: none; }
+
+
+/* 桌面端动画：掉落到 36px */
+@media (min-width: 601px) {
+    @keyframes logoDrop {
+        0% {
+            top: 50vh; left: 50vw;
+            transform: translate(-50%, -50%) scale(10) rotate(400deg);
+            opacity: 0.5;
+        }
+        100% {
+            top: 36px; left: 50%;
+            transform: translate(-50%, -50%) scale(1) rotate(0deg);
+            opacity: 0.9;
+        }
+    }
+}
+
+/* 移动端动画：掉落到 32px */
+@media (max-width: 600px) {
+    @keyframes logoDrop {
+        0% {
+            top: 50vh; left: 50vw;
+            transform: translate(-50%, -50%) scale(10) rotate(360deg);
+            opacity: 0.5;
+        }
+        100% {
+            top: 32px; left: 50%;
+            transform: translate(-50%, -50%) scale(1) rotate(0deg);
+            opacity: 0.9;
+        }
+    }
+}
+
+/* ② 清晰度渐变：下落过程中由"很糊"→"终态模糊值" */
+.logo-blur .dot{
+    animation: dotFocusL 1500ms cubic-bezier(.22,1,.36,1) both;
+    animation-iteration-count: 1;
+}
+.logo-blur .dot + .dot{
+    animation: dotFocusR 1500ms cubic-bezier(.22,1,.36,1) both;
+    animation-iteration-count: 1;
+}
+
+@keyframes dotFocusL{   /* 左圆：更糊 → 终态 2px */
+    0%   {
+        transform: scale(6);
+
+        filter: blur(36px);
+    }
+    100% {
+        transform:  scale(1);
+        filter: blur(3px);
+    }
+}
+
+@keyframes dotFocusR{   /* 右圆：轻糊 → 终态 1px（想完全清晰就改成 0px） */
+    0%   {
+        transform:  scale(4);
+        filter: blur(20px);
+    }
+    100% {
+        transform:  scale(1);
+        filter: blur(1.5px);
+    }
+}
+
+
+/* 圆：淡出 */
+.logo-blur .dot{ transition: opacity 1s ease; }
+.logo-blur .dot.fade-out{ opacity: 0; }
+
+
+/* 切换后变"静态"以防动画重复 */
+.logo-blur.is-static{ animation: none !important; }
+.logo-blur.is-static .dot{ animation: none !important; }
+
+
+.hero-copy { margin-top: 0; }
+.brand {  position: static; display:flex; justify-content:center; margin:0 0 16px;}
+.brand img {
+    width: clamp(90px, 10vw, 120px);  /* 视口越宽，logo 越大；限定最小/最大 */
+    height: auto;
+    display: block;
+}
+.title { font-size: clamp(28px, 4vw, 32px); line-height: 1.2; margin: 0.8em 0 0.8em;font-weight: 400; }
+.subtitle { margin: 0 0 2em; font-size: var(--text-size-subtitle); color: var(--muted); }
+#subtitle3 {
+    color: var(--text-dark);
+    line-height: 2;
+}
+
+
+.appstore-btn {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+    gap: 0.6em;
+    padding: 0.65em 1em;
+    border-radius: 0.9em;
+    color: var(--text);
+    text-decoration: none;
+    font-size: clamp(12px, 1.2vw, 14px);
+    border: 1px solid var(--button-border);
+    background: var(--button-bg);
+    backdrop-filter: blur(6px);
+    transition: background .2s ease, transform .05s ease;
+}
+
+
+.appstore-btn svg{
+    width: 1.2em;
+    height: 1.2em;
+    display: block;
+    overflow: visible;
+    transform: translateY(-0.05em);
+}
+.appstore-btn:hover { background: var(--button-hover); }
+.appstore-btn:active { transform: translateY(1px); }
+
+.scroll-indicator { position: absolute; bottom: 72px; left: 50%; transform: translateX(-50%);}
+.scroll-indicator img {
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+@media (max-width: 600px) {
+    .site-header { height: 64px; padding: 0 16px; }
+    .nav-left { left: 16px; }
+    .nav-right { right: 16px; }
+    .logo-blur { top: 32px; } /* 移动端header高度64px的一半 */
+    .subtitle { font-size: 15px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .scroll-indicator img {
+        animation: float 1.6s ease-in-out infinite;
+    }
+}
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(6px); }
+}
+
+
+
+/* 延迟显示内容的样式 */
+.site-header {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.site-header.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hero-copy {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.hero-copy.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.scroll-indicator {
+    opacity: 0;
+    cursor: pointer;
+    transform: translateX(-50%) translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.scroll-indicator.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+
+.scroll-indicator img {
+    animation: arrowBounce 1.5s ease-in-out infinite;
+}
+
+/* 箭头上下浮动循环 */
+@keyframes arrowBounce {
+    0%, 100% { transform: translateY(0);   opacity: 0.8; }
+    50%      { transform: translateY(8px); opacity: 1;   }
+}
+/* 页面元素浮现动画 */
+.fade-in-element {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-in-element.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 为不同元素设置不同的延迟 */
+.fade-in-element.delay-1 { transition-delay: 0.1s; }
+.fade-in-element.delay-2 { transition-delay: 0.2s; }
+.fade-in-element.delay-3 { transition-delay: 0.3s; }
+.fade-in-element.delay-4 { transition-delay: 0.4s; }
+.fade-in-element.delay-5 { transition-delay: 0.5s; }
+
+/* 可滚动页面样式 */
+
+
+.step{
+    display:inline-flex;
+    align-items:center;
+    width:6em;
+}
+.step1-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background-image: url('assets/step1-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.step-content {
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+    color: white;
+}
+
+
+.input-area {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 100px;
+    padding: 8px 10px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: clamp(280px, 30vw, 400px);
+    margin: 100px auto 0;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.input-area:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.input-area:active {
+    transform: scale(0.95);
+}
+
+.typing-input {
+    text-align: left;  /* 内容在左侧（其实默认就是左对齐） */
+    background: none;
+    border: none;
+    outline: none;
+    color: white;
+    margin-left: 8px;
+    padding: 0 0;
+    pointer-events: none;
+    position: relative;
+}
+.typing-cursor {
+    display: inline-block;
+    width: 1px;
+    height: var(--text-size-subtitle);
+    background: white;
+    margin-left: 2px;
+    animation: blink 1s infinite;
+}
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* 新增的submit-mood-button样式 */
+.submit-mood-button {
+    width: clamp(28px, 4vw, 40px);
+    height: clamp(28px, 4vw, 40px);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-left: 0;
+}
+
+.submit-mood-button img {
+    width: 55%;
+    height: 55%;
+    transform: rotate(180deg);
+    transition: transform 0.8s ease;
+}
+
+.submit-mood-button.typing-complete {
+    background: rgba(255, 255, 255, 0.3);
+    animation: pulse 0.8s ease-in-out;
+}
+
+.submit-mood-button.typing-complete img {
+    transform: rotate(180deg);
+    animation: float-up 0.8s ease-in-out;
+}
+
+@keyframes float-up {
+    0% {
+        transform: rotate(180deg) translateY(0);
+    }
+    50% {
+        transform: rotate(180deg) translateY(3px);
+    }
+    100% {
+        transform: rotate(180deg) translateY(0px);
+    }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* 让 wrapper 成为一个独立的层叠上下文，专门放渐变背景 */
+.gradient-wrapper {
+    scroll-snap-align: none;
+    /* 确保它不是独立滚动容器： */
+    overflow: visible; /* 或者不要给它 overflow:auto/hidden 造成嵌套滚动 */
+    position: relative;
+    isolation: isolate;      /* 关键：避免被 body/#bg 的层叠影响 */
+    width: 100%;             /* 子元素用百分比就好，不要再在子项上用 100vw 出血 */
+}
+
+/* 在 wrapper 的下面画一层渐变背景 */
+.gradient-wrapper::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;              /* 在 wrapper 的最底层，但在 wrapper 内容之下 */
+    background: linear-gradient(180deg,#d3e5e3 0%, #ffffff 10%, #92c7c1 40%, #ffffff 80%);
+}
+
+/* wrapper 内的内容都压在背景伪元素之上 */
+.gradient-wrapper > * {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* 图片滑动容器样式 */
+.image-slider-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    position: relative;
+    width: 100%;
+    background: transparent;
+}
+
+.slider-container {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 5vh;
+}
+
+.slider-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 500px;
+    position: relative;
+    overflow: hidden;
+}
+
+.slide {
+    position: absolute;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.8s ease;
+    background-color: #ffffff;
+
+}
+
+.small-slide {
+    width: clamp(100px, 12vw, 160px);
+    aspect-ratio: 3 / 4;
+    opacity: 0.7;
+    filter: blur(4px);
+    transform: scale(0.8);
+}
+
+.medium-slide {
+    width: clamp(150px, 16vw, 220px);
+    aspect-ratio: 3 / 4;
+    opacity: 0.85;
+    filter: blur(2px);
+    transform: scale(0.9);
+}
+
+.main-slide {
+    width: clamp(200px, 20vw, 280px);
+    aspect-ratio: 3 / 4;
+    opacity: 1;
+    transform: scale(1);
+    z-index: 10;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+
+/* 舞台区域：自适应高度，左右贴边 */
+
+
+.scatter-gallery {
+    height: 100vh;
+    margin: auto;
+    padding-top: 10vh;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* 可选：让内容水平居中 */
+}
+
+.scatter-stage {
+    position: relative;
+    margin-bottom: 6svh;
+    height: 70%;
+    width: 80%;
+    overflow: visible;
+}
+
+@media (max-width: 680px) {
+    .scatter-gallery {
+        padding-top: 8vh;
+    }
+    
+    .scatter-stage {
+        height: 75%;
+        width: 95%;
+        margin-bottom: 4svh;
+    }
+    
+    /* 手机端卡片不可交互 */
+    .scatter-stage .card {
+        pointer-events: none;
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
+}
+
+
+
+/* 卡片：3:4 比例 + 自适应宽度 + 圆角 + 阴影 */
+:root {
+    --card-w: clamp(50px, 6vw, 90px);   /* 基准尺寸 */
+    /* 圆角 ≈ 宽度的 7%，并限制范围避免极端 */
+    --card-radius: clamp(6px, calc(var(--card-w) * 0.07), 12px);
+    --hover-boost: 1;                   /* 悬停最大额外缩放：1 + 0.6 = 1.6 */
+    --radius:  clamp(40px, calc(var(--card-w) * 2), 290px);      /* 影响半径：越大扩散越宽 */
+}
+@media (max-width: 680px) {
+    :root {
+        --card-w: clamp(60px, 8vw, 80px);   /* 手机端稍微增大卡片尺寸 */
+        --card-radius: clamp(8px, calc(var(--card-w) * 0.08), 10px);
+        --radius: clamp(60px, calc(var(--card-w) * 1.5), 120px);
+    }
+}
+.card {
+    position: absolute;
+    width: var(--card-w);
+    aspect-ratio: 3 / 4;
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    transform: translate(-50%, -50%) scale(1);
+    transition: transform 280ms ease, filter 280ms ease;
+    will-change: transform;
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none; /* 避免图片自己拦截事件 */
+}
+
+/* 悬停时给最靠近的那张更高层级，防止被遮挡 */
+.card.is-top {
+    z-index: 9;
+}
+
+
+/* info-page 样式 */
+.info-page {
+    min-height: 100vh;
+    display: flex;
+    position:relative;
+    align-items: center;   /* 垂直居中整体内容 */
+    justify-content: center;
+    background-image: url("assets/info-page-bg.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom center;
+}
+
+.info-content {
+    min-height: 60vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* 三等分 */
+    gap: clamp(30px,10vw,60px);             /* 三列之间的空隙 */
+    width: min(1500px, 90vw); /* 最大宽度，适配大屏小屏 */
+    margin-top:20vh;
+
+}
+
+/* 单独控制每一列 */
+.column {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+
+}
+
+/* ===== footer ===== */
+.info-footer {
+    grid-column: 1 / span 3;   /* footer 横跨整个 grid */
+    display: grid;
+    grid-template-columns: 1fr 2fr;  /* 左1栏，右2栏 */
+    align-items: end;
+}
+
+.footer-left {
+    justify-self: start;
+    width:80px;
+}
+
+.footer-right {
+    justify-self: end;         /* 右对齐 */
+    text-align: right;
+}
+
+
+/* 响应式：窄屏时改为纵向排列 */
+@media (max-width: 680px) {
+    .info-page {
+        align-items: stretch;        /* 取消水平居中 */
+        justify-content: flex-start; /* 取消垂直居中 */
+    }
+
+    .info-content {
+        grid-template-columns: 1fr;  /* 1 列 */
+        gap: 24px;                   /* 列间距更紧凑 */
+        width: 90vw;                 /* 更贴边 */
+        margin: 16vh auto 8vh;       /* 顶部大间距收窄（原来 20vh 太大） */
+        min-height: auto;            /* 允许按内容自然增高 */
+    }
+
+    /* footer 改为上下堆叠 */
+    .info-footer {
+        grid-column: 1;              /* 单列时就是占这一列 */
+        grid-template-columns: 1fr;  /* 垂直排列 */
+        row-gap: 12px;
+        align-items: center;
+        justify-items: center;
+        margin-top: 16px;
+    }
+    .footer-right {
+        justify-self: start;
+        text-align: left;
+    }
+}
+
+/* ===== 用户协议页面样式 ===== */
+.policy-page {
+    min-height: 100vh;
+    padding: 120px 40px 80px;
+    background: linear-gradient(180deg, #d3e5e3 0%, #ffffff 30%, #ffffff 100%);
+    display: flex;
+    justify-content: center;
+}
+
+.policy-content {
+    max-width: 800px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 80px;
+    margin: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.policy-title {
+    font-size: clamp(32px, 5vw, 48px);
+    color: #80a2aa;
+    text-align: center;
+    margin-bottom: 40px;
+    font-weight: 400;
+}
+
+.policy-text {
+    color: #333;
+    line-height: 1.8;
+    font-size: clamp(14px, 1.5vw, 16px);
+}
+
+.policy-text h2 {
+    color: #333;
+    font-size: clamp(20px, 2.5vw, 24px);
+    margin: 32px 0 16px;
+    font-weight: 500;
+}
+
+.policy-text h3 {
+    color: #333;
+    font-size: clamp(18px, 2vw, 20px);
+    margin: 24px 0 12px;
+    font-weight: 500;
+}
+
+.policy-text p {
+    margin: 16px 0;
+}
+
+.policy-text ul, .policy-text ol {
+    margin: 16px 0;
+    padding-left: 24px;
+}
+
+.policy-text li {
+    margin: 8px 0;
+}
+
+.policy-footer {
+    padding: 40px 20px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.5);
+    color: #80a2aa;
+    font-size: clamp(12px, 1.2vw, 14px);
+}
+
+.policy-footer .footer-links {
+    margin-bottom: 16px;
+}
+
+.policy-footer .footer-links a {
+    color: #80a2aa;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.policy-footer .footer-links a:hover {
+    opacity: 0.7;
+}
+
+.policy-footer .footer-links span {
+    margin: 0 8px;
+    color: #80a2aa;
+}
+
+.policy-footer .footer-info {
+    color: #999;
+}
+
+@media (max-width: 680px) {
+    .policy-page {
+        padding: 100px 20px 60px;
+    }
+    
+    .policy-content {
+        padding: 40px 30px;
+        margin: 10px;
+        border-radius: 15px;
+    }
+    
+    .policy-title {
+        margin-bottom: 30px;
+    }
+    
+    .policy-text {
+        font-size: 15px;
+    }
+}

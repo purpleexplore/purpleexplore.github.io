@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>somo 有时</title>
+    <meta name="description" content="理解你情绪轨迹的共作者" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="js/BlurGradientBg.min.js"></script>
+    <script src="js/script.js"></script>
+    <script type="text/javascript" src="http://cdn1.foundertype.com/webfont/js/ftfont-init.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+    <div id="bg" aria-hidden="true"></div>
+
+    <header class="site-header">
+        <a class="nav-left" href="javascript:void(0)">关于somo</a>
+        <a class="nav-right" href="mailto:developer@somoday.com">联系我们</a>
+    </header>
+    
+    <!-- 将logo独立出来，不受header动画影响 -->
+    <div class="logo-blur" id="logoBlur" aria-hidden="true">
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </div>
+
+    <main class="hero">
+        <div class="hero-copy">
+            <div class="brand">
+                <img src="assets/logotype.svg" alt="">
+            </div>
+            <h1 class="title">理解你情绪轨迹的共作者</h1>
+            <p class="subtitle">每一次倾诉，都是和自己的一次温柔相遇。</p>
+
+            <a class="appstore-btn" href="https://apps.apple.com/app/id6752848211" target="_blank" rel="noopener noreferrer" aria-label="在 App Store 下载">
+                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M17.564 13.54c-.03-3.223 2.632-4.77 2.754-4.84-1.503-2.194-3.84-2.494-4.661-2.522-1.98-.206-3.87 1.162-4.872 1.162-1.02 0-2.56-1.135-4.216-1.103-2.162.032-4.165 1.258-5.28 3.193-2.25 3.868-.572 9.57 1.617 12.7 1.08 1.55 2.358 3.293 4.04 3.233 1.64-.064 2.256-1.04 4.24-1.04 1.967 0 2.54 1.04 4.256.998 1.764-.03 2.88-1.566 3.95-3.123 1.24-1.79 1.75-3.53 1.78-3.62-.04-.016-3.41-1.31-3.51-5.24zM14.99 3.9c.87-1.054 1.46-2.52 1.3-3.98-1.26.05-2.79.86-3.69 1.92-.81.94-1.52 2.47-1.33 3.91 1.4.11 2.84-.71 3.72-1.85z"/></svg>
+                <span>App Store</span>
+            </a>
+        </div>
+
+        <div class="scroll-indicator" aria-hidden="true" onclick="scrollToMoodSection()">
+            <img src="assets/arrow.svg" alt="">
+        </div>
+    </main>
+
+    <!-- 新增的情绪记录页面 -->
+    <section class="step1-section" id="step-section">
+        <div class="step-content">
+            <div class="step fade-in-element delay-1">
+                <img src="assets/step1.svg" alt="">
+            </div>
+            <h1 class="title fade-in-element delay-2">轻轻写下此刻的情绪</h1>
+            <p class="subtitle fade-in-element delay-3">Some feelings speak without words,<br>resting softly in silence.</p>
+            <div class="input-area fade-in-element delay-4">
+                <div class="typing-input" id="typingInput">
+                    <span class="subtitle" id="typingText"></span><span class="typing-cursor"></span>
+                </div>
+                <div class="submit-mood-button">
+                    <img src="assets/arrow.svg" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="gradient-wrapper">
+    <!-- 图片滑动容器 -->
+    <section class="image-slider-section" id="image-slider">
+        <div class="slider-container">
+            <div class="slider-wrapper" id="sliderWrapper">
+                <div class="slide small-slide">
+                    <img src="assets/slide1.jpg" alt="图片1">
+                </div>
+                <div class="slide small-slide">
+                    <img src="assets/slide2.jpg" alt="图片2">
+                </div>
+                <div class="slide main-slide active">
+                    <img src="assets/slide3.jpg" alt="图片3">
+                </div>
+                <div class="slide small-slide">
+                    <img src="assets/slide4.jpg" alt="图片4">
+                </div>
+                <div class="slide small-slide">
+                    <img src="assets/slide5.jpg" alt="图片5">
+                </div>
+                <div class="slide small-slide">
+                    <img src="assets/slide6.jpg" alt="图片6">
+                </div>
+                <div class="slide small-slide">
+                    <img src="assets/slide7.jpg" alt="图片7">
+                </div>
+                <div class="slide small-slide">
+                    <img src="assets/slide8.jpg" alt="图片8">
+                </div>
+            </div>
+        </div>
+        <div class="step-content">
+            <div class="step fade-in-element delay-1">
+                <img src="assets/step2.svg" alt="">
+            </div>
+            <h1 class="title fade-in-element delay-2">漂浮的情绪凝成一张卡片</h1>
+            <p class="subtitle fade-in-element delay-3">Emotions adrift in the air slowly crystallize,<br>becoming a card that holds their tender weight.</p>
+        </div>
+    </section>
+
+    <section class="scatter-gallery">
+        <div class="scatter-stage" id="scatterStage">
+
+        </div>
+        <div class="step-content">
+            <p class="subtitle fade-in-element delay-1" id="subtitle3">每一次的生成<br>都会落在轨迹里<br>成为你心底的光</p>
+        </div>
+    </section>
+</div>
+    <section class="info-page" id="info-page">
+        <div class="info-content">
+            <div class="column fade-in-element delay-1" id="column1">
+                <p class="subtitle">关于somo</p>
+            </div>
+            
+            <div class="column fade-in-element delay-2" id="column2">
+                <div class="subtitle">
+                    <span>有时是你情绪轨迹的共作者
+                    <br>记录那些难以言说的心绪,
+                    <br>在文字与图像中,轻轻捕捉每一个瞬间。
+                    <br>它不急着给出答案,只是陪你一起感受。
+                    <br>每一次打开,都是和自己的一次温柔相遇。</span>
+                </div>
+                
+                <div class="info-button">
+                    <a class="appstore-btn" href="https://apps.apple.com/app/id6752848211" target="_blank" rel="noopener noreferrer" aria-label="在 App Store 下载">
+                        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M17.564 13.54c-.03-3.223 2.632-4.77 2.754-4.84-1.503-2.194-3.84-2.494-4.661-2.522-1.98-.206-3.87 1.162-4.872 1.162-1.02 0-2.56-1.135-4.216-1.103-2.162.032-4.165 1.258-5.28 3.193-2.25 3.868-.572 9.57 1.617 12.7 1.08 1.55 2.358 3.293 4.04 3.233 1.64-.064 2.256-1.04 4.24-1.04 1.967 0 2.54 1.04 4.256.998 1.764-.03 2.88-1.566 3.95-3.123 1.24-1.79 1.75-3.53 1.78-3.62-.04-.016-3.41-1.31-3.51-5.24zM14.99 3.9c.87-1.054 1.46-2.52 1.3-3.98-1.26.05-2.79.86-3.69 1.92-.81.94-1.52 2.47-1.33 3.91 1.4.11 2.84-.71 3.72-1.85z"/></svg>
+                        <span>App Store</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="column fade-in-element delay-3" id="column3">
+                <div class="subtitle">
+                    <span>Somo is a co-creator of
+                        <br>your emotional journey.
+                        <br>It gently captures the moments
+                        <br>It gently captures the moments
+                        <br>you can't quite put into words,
+                        <br>through fragments of text and image.
+                        <br>It doesn't rush to fix—just stays,
+                        <br>and feels with you.
+                        <br>Every time you return,
+                        <br>it's a quiet meeting with yourself.</span>
+                </div>
+            </div>
+
+            
+            <div class="info-footer fade-in-element delay-4">
+                <div class="footer-left">
+                    <img src="assets/logotype.svg" alt="">
+                </div>
+                <div class="footer-right">
+                    <span class="footer-links subtitle"><a href="user-policy.html" style="color: inherit; text-decoration: none;">用户协议</a> | <a href="privacy-policy.html" style="color: inherit; text-decoration: none;">隐私政策</a> | <a href="mailto:developer@somoday.com" style="color: inherit; text-decoration: none;">联系我们</a> | 开若图科技(上海)有限公司| 沪ICP备2025136576号</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+<script>
+    const colorbg = new Color4Bg.BlurGradientBg({
+        dom: 'bg',
+        colors: ['#afdbc3','#8dcebe','#60a1a9','#86b5bb'],
+        loop: true
+    });
+    colorbg.update('noise', 0);
+    
+    // 减慢动画速度
+    setTimeout(() => {
+        const canvas = document.getElementById('colorbgcanvas');
+        if (canvas) {
+            canvas.style.animationDuration = '12s';
+            canvas.style.animationTimingFunction = 'linear';
+        }
+        
+        // 尝试减慢内部动画
+        if (colorbg.rttProgram && colorbg.rttProgram.uniforms) {
+            // 减慢时间速度
+            const originalAnimate = colorbg._animate;
+            colorbg._animate = function() {
+                this.rttProgram.uniforms.u_time.value = 2 * Math.sin(this.frame / 400); // 从200改为400
+            };
+        }
+    }, 100);
+</script>
+
+</body>
+</html>
