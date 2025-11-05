@@ -38,10 +38,15 @@
 </head>
 <body style="position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; overflow: hidden !important; width: 100% !important;">
 <script>
-    // Safari兼容性：body标签加载后立即设置滚动位置
-    window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
+    // Safari兼容性：body标签加载后立即移除内联样式并设置滚动位置
+    (function() {
+        // 立即移除内联样式，恢复滚动能力
+        document.body.removeAttribute('style');
+        // 强制设置滚动位置到顶部
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+    })();
 </script>
 
     <div id="bg" aria-hidden="true"></div>

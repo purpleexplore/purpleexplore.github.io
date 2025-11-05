@@ -73,15 +73,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 }, 3000); // 3秒后强制清理所有dots和logo-blur
 
-    // 强制恢复滚动机制：确保页面一定会恢复滚动
+    // 强制显示内容机制：确保页面内容一定会显示
     setTimeout(() => {
-    if (!document.body.classList.contains('ready')) {
-        console.log('强制恢复滚动：添加ready类');
-        document.body.classList.add('ready');
-        document.body.removeAttribute('style');
+    if (!contentShown) {
+        console.log('强制显示页面内容');
         showPageContent();
     }
-}, 2000); // 2秒后强制恢复滚动
+}, 2000);
 
     // 页面可见性变化时也清理dots和logo-blur
     document.addEventListener('visibilitychange', () => {
@@ -97,11 +95,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         
-        // 确保页面恢复滚动
-        if (!document.body.classList.contains('ready')) {
-            console.log('页面重新可见时强制恢复滚动');
-            document.body.classList.add('ready');
-            document.body.removeAttribute('style');
+        // 确保页面内容显示
+        if (!contentShown) {
+            console.log('页面重新可见时确保内容显示');
             showPageContent();
         }
         
@@ -275,29 +271,19 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('滚动指示器显示动画已触发');
 }
 
-    // 添加ready类，恢复正常滚动
-    document.body.classList.add('ready');
-    // Safari兼容性：移除body上的内联样式，让CSS类生效
-    document.body.removeAttribute('style');
-    console.log('Ready类已添加，页面滚动已恢复');
-    
     // Safari兼容性：确保页面在顶部
-    setTimeout(() => {
-        window.scrollTo(0, 0);
-        document.documentElement.scrollTop = 0;
-        document.body.scrollTop = 0;
-        console.log('页面已滚动到顶部');
-    }, 0);
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    console.log('页面内容已显示，滚动位置已设置到顶部');
 }
 
     // 可手动在控制台调用 window.forceSwap() 验证
     window.forceSwap = () => doSwap('manual');
     
-    // 可手动在控制台调用 window.forceScroll() 强制恢复滚动
-    window.forceScroll = () => {
-        console.log('手动强制恢复滚动');
-        document.body.classList.add('ready');
-        document.body.removeAttribute('style');
+    // 可手动在控制台调用 window.forceShow() 强制显示内容
+    window.forceShow = () => {
+        console.log('手动强制显示内容');
         showPageContent();
         window.scrollTo(0, 0);
     };
