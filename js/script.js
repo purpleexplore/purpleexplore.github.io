@@ -1,10 +1,30 @@
+// Safari兼容性：在脚本最开始就设置滚动位置和禁用滚动恢复
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
+
+// 立即执行，不等待DOMContentLoaded
+(function() {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    if (document.body) {
+        document.body.scrollTop = 0;
+    }
+})();
 
 document.addEventListener('DOMContentLoaded', () => {
     // 页面加载时固定在顶部，防止上滑
     document.body.classList.add('loading');
     
-    // 确保页面滚动到顶部
+    // Safari特别处理：强制滚动到顶部并禁止滚动
     window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    
+    // Safari兼容性：禁用滚动恢复
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
     
     // 添加调试信息
     console.log('页面加载开始，添加loading类');
@@ -91,15 +111,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-    // 防止页面刷新时滚动位置变化
+    // Safari兼容性：防止页面刷新时滚动位置变化
     window.addEventListener('beforeunload', () => {
         window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
     });
 
-    // 页面加载完成后确保在顶部
+    // Safari兼容性：页面加载完成后确保在顶部
     window.addEventListener('load', () => {
         window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
         document.body.classList.add('loading');
+    });
+
+    // Safari兼容性：页面显示时（包括从后退按钮返回）确保在顶部
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted) {
+            // 页面是从缓存中恢复的
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+        }
     });
 
     // 创建logo-static的函数
@@ -247,9 +281,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.remove('loading');
     console.log('Loading类已移除，页面滚动已恢复');
     
-    // 确保页面在顶部
-    window.scrollTo(0, 0);
-    console.log('页面已滚动到顶部');
+    // Safari兼容性：确保页面在顶部
+    setTimeout(() => {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        console.log('页面已滚动到顶部');
+    }, 0);
 }
 
     // 可手动在控制台调用 window.forceSwap() 验证

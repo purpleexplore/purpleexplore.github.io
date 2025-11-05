@@ -12,7 +12,21 @@
 
 }
 * { box-sizing: border-box; }
-html, body { height: 100%; margin: 0; scroll-snap-type:y mandatory;scroll-behavior: smooth; }
+
+/* Safari兼容性：禁用自动滚动锚点 */
+html {
+    overflow-anchor: none;
+    height: 100%;
+    margin: 0;
+}
+
+html, body { 
+    height: 100%; 
+    margin: 0; 
+    scroll-snap-type:y mandatory;
+    scroll-behavior: smooth;
+}
+
 body {
     padding: 0;
     font-family: 'FZYouHJW_509R', 'tt-commons-pro', sans-serif;
@@ -27,14 +41,16 @@ body {
     height: 100vh; /* 确保body有固定高度 */
 }
 
-/* 页面加载时固定在顶部，防止上滑 */
+/* 页面加载时固定在顶部，防止上滑 - Safari兼容性增强 */
 body.loading {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow: hidden;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    height: 100vh !important;
 }
 
 /* 把每一屏设为“页面块” */

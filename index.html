@@ -9,10 +9,37 @@
     <link rel="apple-touch-icon" href="assets/favicon.jpeg" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+        /* Safari兼容性：确保页面加载时固定在顶部 */
+        html {
+            overflow-anchor: none;
+            scroll-behavior: auto !important;
+        }
+        body {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+        }
+    </style>
     <script src="js/BlurGradientBg.min.js"></script>
     <script src="js/script.js"></script>
     <script type="text/javascript" src="http://cdn1.foundertype.com/webfont/js/ftfont-init.js"></script>
     <link rel="stylesheet" href="styles.css" />
+    <script>
+        // Safari兼容性：在任何其他脚本运行前就确保页面在顶部
+        (function() {
+            // 立即设置滚动位置
+            if ('scrollRestoration' in history) {
+                history.scrollRestoration = 'manual';
+            }
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+        })();
+    </script>
 </head>
 <body>
 
