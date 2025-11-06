@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>somo 有时个人信息收集清单</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 
+                         'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #f5f6f7;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            background: white;
+            border-radius: 8px;
+            padding: 40px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #1a1a1a;
+        }
+        
+        .update-date {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+        
+        .content {
+            background: white;
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .info-section {
+            margin-bottom: 40px;
+            padding: 24px;
+            background: #fafbfc;
+            border-radius: 8px;
+            border-left: 4px solid #ff2442;
+        }
+        
+        .info-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .info-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+        }
+        
+        .info-row {
+            display: flex;
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+        
+        .info-row:last-child {
+            margin-bottom: 0;
+        }
+        
+        .info-label {
+            color: #666;
+            min-width: 100px;
+            font-weight: 500;
+        }
+        
+        .info-value {
+            color: #333;
+            flex: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 10px;
+            }
+            
+            .header, .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .info-section {
+                padding: 16px;
+            }
+            
+            .info-row {
+                flex-direction: column;
+            }
+            
+            .info-label {
+                margin-bottom: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>somo 有时个人信息收集清单</h1>
+            <div class="update-date">更新日期：2025年11月6日</div>
+        </div>
+        
+        <div class="content">
+            <div class="info-section">
+                <div class="info-title">手机号码</div>
+                <div class="info-row">
+                    <span class="info-label">使用目的：</span>
+                    <span class="info-value">创建账号</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">使用场景：</span>
+                    <span class="info-value">注册和登录账号</span>
+                </div>
+            </div>
+            
+            <div class="info-section">
+                <div class="info-title">昵称</div>
+                <div class="info-row">
+                    <span class="info-label">使用目的：</span>
+                    <span class="info-value">创建账号</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">使用场景：</span>
+                    <span class="info-value">注册创建账号</span>
+                </div>
+            </div>
+            
+            <div class="info-section">
+                <div class="info-title">粗略位置</div>
+                <div class="info-row">
+                    <span class="info-label">使用目的：</span>
+                    <span class="info-value">提供个性化天气和问候语</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">使用场景：</span>
+                    <span class="info-value">首页问候语、对话框天气服务</span>
+                </div>
+            </div>
+            
+            <div class="info-section">
+                <div class="info-title">心情</div>
+                <div class="info-row">
+                    <span class="info-label">使用目的：</span>
+                    <span class="info-value">情绪同理</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">使用场景：</span>
+                    <span class="info-value">AI根据情绪绘制诗歌图片</span>
+                </div>
+            </div>
+            
+            <div class="info-section">
+                <div class="info-title">设备信息（IMEI、IMSI、IDFA、OAID）</div>
+                <div class="info-row">
+                    <span class="info-label">使用目的：</span>
+                    <span class="info-value">性能分析</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">使用场景：</span>
+                    <span class="info-value">崩溃闪退等性能监控和修复</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
