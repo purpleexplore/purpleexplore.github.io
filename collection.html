@@ -20,7 +20,7 @@
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 40px 20px;
         }
@@ -51,46 +51,67 @@
             border-radius: 8px;
             padding: 40px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow-x: auto;
         }
         
-        .info-section {
-            margin-bottom: 40px;
-            padding: 24px;
-            background: #fafbfc;
-            border-radius: 8px;
-            border-left: 4px solid #ff2442;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            background: white;
         }
         
-        .info-section:last-child {
-            margin-bottom: 0;
+        thead {
+            background-color: #f8f9fa;
         }
         
-        .info-title {
-            font-size: 18px;
+        th {
+            padding: 16px 12px;
+            text-align: left;
             font-weight: 600;
             color: #1a1a1a;
-            margin-bottom: 16px;
+            border: 1px solid #e5e7eb;
+            white-space: nowrap;
         }
         
-        .info-row {
-            display: flex;
-            margin-bottom: 12px;
-            font-size: 15px;
-        }
-        
-        .info-row:last-child {
-            margin-bottom: 0;
-        }
-        
-        .info-label {
-            color: #666;
-            min-width: 100px;
-            font-weight: 500;
-        }
-        
-        .info-value {
+        td {
+            padding: 16px 12px;
+            border: 1px solid #e5e7eb;
             color: #333;
-            flex: 1;
+            vertical-align: top;
+        }
+        
+        tbody tr {
+            transition: background-color 0.2s;
+        }
+        
+        tbody tr:hover {
+            background-color: #f9fafb;
+        }
+        
+        tbody tr:nth-child(even) {
+            background-color: #fafbfc;
+        }
+        
+        tbody tr:nth-child(even):hover {
+            background-color: #f3f4f6;
+        }
+        
+        .info-type {
+            font-weight: 500;
+            color: #1a1a1a;
+        }
+        
+        .info-name {
+            color: #333;
+        }
+        
+        .info-purpose {
+            color: #555;
+        }
+        
+        .info-scenario {
+            color: #555;
         }
         
         @media (max-width: 768px) {
@@ -106,16 +127,16 @@
                 font-size: 24px;
             }
             
-            .info-section {
-                padding: 16px;
+            table {
+                font-size: 12px;
             }
             
-            .info-row {
-                flex-direction: column;
+            th, td {
+                padding: 12px 8px;
             }
             
-            .info-label {
-                margin-bottom: 4px;
+            .content {
+                overflow-x: scroll;
             }
         }
     </style>
@@ -124,69 +145,130 @@
     <div class="container">
         <div class="header">
             <h1>somo 有时个人信息收集清单</h1>
-            <div class="update-date">更新日期：2025年11月6日</div>
+            <div class="update-date">更新日期：2025年11月10日</div>
         </div>
         
         <div class="content">
-            <div class="info-section">
-                <div class="info-title">手机号码</div>
-                <div class="info-row">
-                    <span class="info-label">使用目的：</span>
-                    <span class="info-value">创建账号</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">使用场景：</span>
-                    <span class="info-value">注册和登录账号</span>
-                </div>
-            </div>
-            
-            <div class="info-section">
-                <div class="info-title">昵称</div>
-                <div class="info-row">
-                    <span class="info-label">使用目的：</span>
-                    <span class="info-value">创建账号</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">使用场景：</span>
-                    <span class="info-value">注册创建账号</span>
-                </div>
-            </div>
-            
-            <div class="info-section">
-                <div class="info-title">粗略位置</div>
-                <div class="info-row">
-                    <span class="info-label">使用目的：</span>
-                    <span class="info-value">提供个性化天气和问候语</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">使用场景：</span>
-                    <span class="info-value">首页问候语、对话框天气服务</span>
-                </div>
-            </div>
-            
-            <div class="info-section">
-                <div class="info-title">心情</div>
-                <div class="info-row">
-                    <span class="info-label">使用目的：</span>
-                    <span class="info-value">情绪同理</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">使用场景：</span>
-                    <span class="info-value">AI根据情绪绘制诗歌图片</span>
-                </div>
-            </div>
-            
-            <div class="info-section">
-                <div class="info-title">设备信息（IMEI、IMSI、IDFA、OAID）</div>
-                <div class="info-row">
-                    <span class="info-label">使用目的：</span>
-                    <span class="info-value">性能分析</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">使用场景：</span>
-                    <span class="info-value">崩溃闪退等性能监控和修复</span>
-                </div>
-            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>信息类型</th>
+                        <th>信息名称</th>
+                        <th>使用目的</th>
+                        <th>使用场景</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="info-type">用户资料信息</td>
+                        <td class="info-name">手机号码</td>
+                        <td class="info-purpose">创建账号、登录</td>
+                        <td class="info-scenario">首次注册创建账号、使用一键登录功能</td>
+                    </tr>
+                    <tr>
+                        <td class="info-type">用户资料信息</td>
+                        <td class="info-name">昵称</td>
+                        <td class="info-purpose">展示</td>
+                        <td class="info-scenario">首次注册创建账号、用户自行编辑资料</td>
+                    </tr>
+                    <tr>
+                        <td class="info-type">用户身份信息</td>
+                        <td class="info-name">账号</td>
+                        <td class="info-purpose">创建账号、登录</td>
+                        <td class="info-scenario">创建账号、登录</td>
+                    </tr>
+                    <tr>
+                        <td class="info-type">用户服务内容信息</td>
+                        <td class="info-name">客服沟通记录</td>
+                        <td class="info-purpose">客服沟通</td>
+                        <td class="info-scenario">客服沟通</td>
+                    </tr>
+                    <tr>
+                        <td class="info-type">用户服务内容信息</td>
+                        <td class="info-name">地理位置</td>
+                        <td class="info-purpose">位置和天气显示、安全运行与风控验证</td>
+                        <td class="info-scenario">展示用户当前位置及当地天气情况、APP安全运行与风险控制</td>
+                    </tr>
+                    <tr>
+                        <td class="info-type">用户服务内容信息</td>
+                        <td class="info-name">交互内容（包括文本、图片）</td>
+                        <td class="info-purpose">AI内容生成服务</td>
+                        <td class="info-scenario">AI内容生成服务</td>
+                    </tr>
+                    <tr>
+                        <td class="info-type">设备信息</td>
+                        <td class="info-name">IMEI</td>
+                        <td class="info-purpose">安全运行与风控验证</td>
+                        <td class="info-scenario">App安全运行与风险控制</td>
+                    </tr>
+                    <tr>
+                        <td class="info-type">设备信息</td>
+                        <td class="info-name">OAID</td>
+                        <td class="info-purpose">安全运行与风控验证</td>
+                        <td class="info-scenario">App安全运行与风险控制</td>
+                    </tr>
+                    <tr>
+                        <td class="info-type">设备信息</td>
+                        <td class="info-name">IDFA</td>
+                        <td class="info-purpose">安全运行与风控验证</td>
+                        <td class="info-scenario">App安全运行与风险控制</td>
+                    </tr>
+                    <tr>
+                        <td class="info-type">设备信息</td>
+                        <td class="info-name">语言设置</td>
+                        <td class="info-purpose">安全运行与风控验证</td>
+                        <td class="info-scenario">App安全运行与风险控制</td>
+                    </tr>
+                    <tr>
+                        <td class="info-type">设备信息</td>
+                        <td class="info-name">操作系统和应用程序版本</td>
+                        <td class="info-purpose">安全运行与风控验证</td>
+                        <td class="info-scenario">App安全运行与风险控制</td>
+                    </tr>
+                    <tr>
+                        <td class="info-type">设备信息</td>
+                        <td class="info-name">产品版本号</td>
+                        <td class="info-purpose">安全运行与风控验证</td>
+                        <td class="info-scenario">App安全运行与风险控制</td>
+                    </tr>
+                    <tr>
+                        <td class="info-type">设备信息</td>
+                        <td class="info-name">设备型号和名称</td>
+                        <td class="info-purpose">安全运行与风控验证、兼容性判断</td>
+                        <td class="info-scenario">App安全运行与风控验证、APP功能兼容性判断</td>
+                    </tr>
+                    <tr>
+                        <td class="info-type">设备信息</td>
+                        <td class="info-name">IP地址</td>
+                        <td class="info-purpose">安全运行与风控验证</td>
+                        <td class="info-scenario">App安全运行与风控验证</td>
+                    </tr>
+                    <tr>
+                        <td class="info-type">设备信息</td>
+                        <td class="info-name">CPU型号</td>
+                        <td class="info-purpose">兼容性判断</td>
+                        <td class="info-scenario">App功能兼容性判断</td>
+                    </tr>
+                    <tr>
+                        <td class="info-type">设备信息</td>
+                        <td class="info-name">设备制造商</td>
+                        <td class="info-purpose">兼容性判断</td>
+                        <td class="info-scenario">App功能兼容性判断</td>
+                    </tr>
+                    <tr>
+                        <td class="info-type">设备信息</td>
+                        <td class="info-name">设备GSM网络类型</td>
+                        <td class="info-purpose">安全运行与风控验证、兼容性判断</td>
+                        <td class="info-scenario">App安全运行与风控验证、APP功能兼容性判断</td>
+                    </tr>
+                    <tr>
+                        <td class="info-type">设备信息</td>
+                        <td class="info-name">网络运营商</td>
+                        <td class="info-purpose">登录</td>
+                        <td class="info-scenario">使用一键登录功能</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </body>
