@@ -43,6 +43,7 @@
         .update-date {
             color: #666;
             font-size: 14px;
+            margin-bottom: 30px;
         }
         
         .content {
@@ -56,12 +57,12 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
             font-size: 14px;
+            background: white;
         }
         
         thead {
-            background-color: #f5f6f7;
+            background-color: #f8f9fa;
         }
         
         th {
@@ -69,23 +70,31 @@
             text-align: left;
             font-weight: 600;
             color: #1a1a1a;
-            border-bottom: 2px solid #e5e6e7;
+            border: 1px solid #e5e7eb;
             white-space: nowrap;
         }
         
         td {
             padding: 16px 12px;
-            border-bottom: 1px solid #e5e6e7;
+            border: 1px solid #e5e7eb;
             color: #333;
             vertical-align: top;
         }
         
+        tbody tr {
+            transition: background-color 0.2s;
+        }
+        
         tbody tr:hover {
+            background-color: #f9fafb;
+        }
+        
+        tbody tr:nth-child(even) {
             background-color: #fafbfc;
         }
         
-        tbody tr:last-child td {
-            border-bottom: none;
+        tbody tr:nth-child(even):hover {
+            background-color: #f3f4f6;
         }
         
         a {
@@ -118,16 +127,9 @@
             th, td {
                 padding: 12px 8px;
             }
-        }
-        
-        /* 使表格在小屏幕上可以横向滚动 */
-        @media (max-width: 1024px) {
-            .content {
-                overflow-x: auto;
-            }
             
-            table {
-                min-width: 900px;
+            .content {
+                overflow-x: scroll;
             }
         }
     </style>
@@ -136,7 +138,7 @@
     <div class="container">
         <div class="header">
             <h1>somo 有时第三方信息共享清单</h1>
-            <div class="update-date">更新日期：2025年11月6日</div>
+            <div class="update-date">更新日期：2025年11月10日</div>
         </div>
         
         <div class="content">
@@ -156,7 +158,7 @@
                         <td>中移互联网有限公司</td>
                         <td>移动一键登录SDK</td>
                         <td>设备信息、网络设备硬件地址、网络信息、麦克风（录音）、相机（摄像头）</td>
-                        <td>一键登录注册</td>
+                        <td>用于一键登录注册功能，帮助移动用户便捷登录注册</td>
                         <td>SDK本机采集</td>
                         <td><a href="http://dev.10086.cn/docInside?contentId=10000009826805" target="_blank">http://dev.10086.cn/docInside?contentId=10000009826805</a></td>
                     </tr>
@@ -164,7 +166,7 @@
                         <td>中国电信股份有限公司</td>
                         <td>电信一键登录SDK</td>
                         <td>网络信息、读取手机状态</td>
-                        <td>一键登录注册</td>
+                        <td>用于一键登录注册功能，帮助电信用户便捷登录注册</td>
                         <td>SDK本机采集</td>
                         <td><a href="https://e.189.cn/legalStatement.jsp" target="_blank">https://e.189.cn/legalStatement.jsp</a></td>
                     </tr>
@@ -172,15 +174,23 @@
                         <td>中国联合网络通信集团有限公司</td>
                         <td>联通一键登录SDK</td>
                         <td>APP包名、IP地址、设备类型、操作系统版本、网络制式、运营商类型</td>
-                        <td>一键登录注册</td>
+                        <td>用于一键登录注册功能，帮助联通用户便捷登录注册</td>
                         <td>SDK本机采集</td>
                         <td><a href="http://m.client.10010.com/mobileService/tuwenhunpai/notice_1527478459203.html" target="_blank">http://m.client.10010.com/mobileService/tuwenhunpai/notice_1527478459203.html</a></td>
                     </tr>
                     <tr>
-                        <td>北京锐讯灵通科技有限公司</td>
-                        <td>友盟SDK</td>
-                        <td>页面访问量、时长、应用异常</td>
-                        <td>数据分析、消息推送通知</td>
+                        <td>友盟同欣（北京）科技有限公司</td>
+                        <td>友盟+应用性能监控SDK</td>
+                        <td>设备信息（设备型号、操作系统版本、设备标识符）、应用性能数据（启动时间、页面加载时间、网络请求性能）、崩溃日志</td>
+                        <td>用于应用性能监控、卡顿分析、崩溃分析，帮助我们及时发现并解决性能问题，优化用户体验</td>
+                        <td>SDK本机采集</td>
+                        <td><a href="https://www.umeng.com/page/policy" target="_blank">https://www.umeng.com/page/policy</a></td>
+                    </tr>
+                    <tr>
+                        <td>友盟同欣（北京）科技有限公司</td>
+                        <td>友盟+移动统计SDK</td>
+                        <td>设备信息（设备型号、操作系统版本、设备标识符）、应用使用情况（页面访问、功能使用频率）、网络类型</td>
+                        <td>用于统计分析应用使用情况，帮助我们了解产品使用数据，优化产品功能与用户体验</td>
                         <td>SDK本机采集</td>
                         <td><a href="https://www.umeng.com/page/policy" target="_blank">https://www.umeng.com/page/policy</a></td>
                     </tr>
