@@ -178,15 +178,73 @@
           width: 100%;
           border-collapse: collapse;
           margin: var(--spacing-md) 0;
+          table-layout: auto;
         }
-        .policy-section table td {
+        .policy-section table td,
+        .policy-section table th {
           padding: var(--spacing-sm);
           border: 1px solid var(--border-color);
           color: var(--text-secondary);
+          vertical-align: top;
+          word-wrap: break-word;
+          word-break: break-word;
+          line-height: 1.6;
+        }
+        .policy-section table th {
+          background-color: rgba(128, 162, 170, 0.1);
+          font-weight: 600;
+          color: var(--text-primary);
+          text-align: left;
         }
         .policy-section table td:first-child {
           font-weight: 500;
           color: var(--text-primary);
+        }
+        
+        /* SDK 信息表格特殊样式 */
+        .policy-section table.sdk-table {
+          font-size: 0.9rem;
+          overflow-x: auto;
+          display: block;
+        }
+        .policy-section table.sdk-table thead,
+        .policy-section table.sdk-table tbody,
+        .policy-section table.sdk-table tr {
+          display: table;
+          width: 100%;
+          table-layout: fixed;
+        }
+        .policy-section table.sdk-table th,
+        .policy-section table.sdk-table td {
+          padding: 12px 8px;
+        }
+        .policy-section table.sdk-table th:nth-child(1),
+        .policy-section table.sdk-table td:nth-child(1) {
+          width: 12%;
+        }
+        .policy-section table.sdk-table th:nth-child(2),
+        .policy-section table.sdk-table td:nth-child(2) {
+          width: 12%;
+        }
+        .policy-section table.sdk-table th:nth-child(3),
+        .policy-section table.sdk-table td:nth-child(3) {
+          width: 22%;
+        }
+        .policy-section table.sdk-table th:nth-child(4),
+        .policy-section table.sdk-table td:nth-child(4) {
+          width: 12%;
+        }
+        .policy-section table.sdk-table th:nth-child(5),
+        .policy-section table.sdk-table td:nth-child(5) {
+          width: 10%;
+        }
+        .policy-section table.sdk-table th:nth-child(6),
+        .policy-section table.sdk-table td:nth-child(6) {
+          width: 32%;
+        }
+        .policy-section table.sdk-table a {
+          word-break: break-all;
+          font-size: 0.85rem;
         }
         
         /* Header 样式 */
@@ -279,6 +337,22 @@
           }
           .nav-left { left: 16px; }
           .nav-right { right: 16px; }
+          
+          /* 移动端表格样式 */
+          .policy-section table.sdk-table {
+            font-size: 0.8rem;
+            overflow-x: auto;
+            display: block;
+            -webkit-overflow-scrolling: touch;
+          }
+          .policy-section table.sdk-table th,
+          .policy-section table.sdk-table td {
+            padding: 8px 6px;
+            min-width: 80px;
+          }
+          .policy-section table.sdk-table a {
+            font-size: 0.75rem;
+          }
         }
     </style>
 </head>
@@ -396,47 +470,51 @@
                     <p><strong>2.9 SDK相关信息</strong></p>
                     <p>为了向您提供更完善的服务，我们可能会接入第三方SDK。以下是我们使用的第三方SDK及其信息收集情况：</p>
                     
-                    <table>
-                        <tr>
-                            <td>第三方公司名称</td>
-                            <td>SDK名称</td>
-                            <td>共享信息名称</td>
-                            <td>使用场景</td>
-                            <td>共享方式</td>
-                            <td>第三方个人信息处理规则</td>
-                        </tr>
-                        <tr>
-                            <td>中移互联网有限公司</td>
-                            <td>移动一键登录SDK</td>
-                            <td>设备信息、网络设备硬件地址、网络信息、麦克风（录音）、相机（摄像头）</td>
-                            <td>一键登录注册</td>
-                            <td>SDK本机采集</td>
-                            <td><a href="http://dev.10086.cn/docInside?contentId=10000009826805" target="_blank">http://dev.10086.cn/docInside?contentId=10000009826805</a></td>
-                        </tr>
-                        <tr>
-                            <td>中国电信股份有限公司</td>
-                            <td>电信一键登录SDK</td>
-                            <td>网络信息、读取手机状态</td>
-                            <td>一键登录注册</td>
-                            <td>SDK本机采集</td>
-                            <td><a href="https://e.189.cn/legalStatement.jsp" target="_blank">https://e.189.cn/legalStatement.jsp</a></td>
-                        </tr>
-                        <tr>
-                            <td>中国联合网络通信集团有限公司</td>
-                            <td>联通一键登录SDK</td>
-                            <td>APP包名、IP地址、设备类型、操作系统版本、网络制式、运营商类型</td>
-                            <td>一键登录注册</td>
-                            <td>SDK本机采集</td>
-                            <td><a href="http://m.client.10010.com/mobileService/tuwenhunpai/notice_1527478459203.html" target="_blank">http://m.client.10010.com/mobileService/tuwenhunpai/notice_1527478459203.html</a></td>
-                        </tr>
-                        <tr>
-                            <td>北京锐讯灵通科技有限公司</td>
-                            <td>友盟SDK</td>
-                            <td>页面访问量、时长、应用异常</td>
-                            <td>数据分析、消息推送通知</td>
-                            <td>SDK本机采集</td>
-                            <td><a href="https://www.umeng.com/page/policy" target="_blank">https://www.umeng.com/page/policy</a></td>
-                        </tr>
+                    <table class="sdk-table">
+                        <thead>
+                            <tr>
+                                <th>第三方公司名称</th>
+                                <th>SDK名称</th>
+                                <th>共享信息名称</th>
+                                <th>使用场景</th>
+                                <th>共享方式</th>
+                                <th>第三方个人信息处理规则</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>中移互联网有限公司</td>
+                                <td>移动一键登录SDK</td>
+                                <td>设备信息、网络设备硬件地址、网络信息、麦克风（录音）、相机（摄像头）</td>
+                                <td>一键登录注册</td>
+                                <td>SDK本机采集</td>
+                                <td><a href="http://dev.10086.cn/docInside?contentId=10000009826805" target="_blank">http://dev.10086.cn/docInside?contentId=10000009826805</a></td>
+                            </tr>
+                            <tr>
+                                <td>中国电信股份有限公司</td>
+                                <td>电信一键登录SDK</td>
+                                <td>网络信息、读取手机状态</td>
+                                <td>一键登录注册</td>
+                                <td>SDK本机采集</td>
+                                <td><a href="https://e.189.cn/legalStatement.jsp" target="_blank">https://e.189.cn/legalStatement.jsp</a></td>
+                            </tr>
+                            <tr>
+                                <td>中国联合网络通信集团有限公司</td>
+                                <td>联通一键登录SDK</td>
+                                <td>APP包名、IP地址、设备类型、操作系统版本、网络制式、运营商类型</td>
+                                <td>一键登录注册</td>
+                                <td>SDK本机采集</td>
+                                <td><a href="http://m.client.10010.com/mobileService/tuwenhunpai/notice_1527478459203.html" target="_blank">http://m.client.10010.com/mobileService/tuwenhunpai/notice_1527478459203.html</a></td>
+                            </tr>
+                            <tr>
+                                <td>北京锐讯灵通科技有限公司</td>
+                                <td>友盟SDK</td>
+                                <td>页面访问量、时长、应用异常</td>
+                                <td>数据分析、消息推送通知</td>
+                                <td>SDK本机采集</td>
+                                <td><a href="https://www.umeng.com/page/policy" target="_blank">https://www.umeng.com/page/policy</a></td>
+                            </tr>
+                        </tbody>
                     </table>
                     
                     <h3><strong>3. 征得授权同意的例外</strong></h3>
