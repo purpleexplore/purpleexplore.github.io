@@ -248,6 +248,27 @@
           font-size: 0.85rem;
         }
         
+        /* 设备权限表格特殊样式 */
+        .policy-section table.device-permission-table {
+          table-layout: fixed;
+        }
+        .policy-section table.device-permission-table th:nth-child(1),
+        .policy-section table.device-permission-table td:nth-child(1) {
+          width: 18%;
+        }
+        .policy-section table.device-permission-table th:nth-child(2),
+        .policy-section table.device-permission-table td:nth-child(2) {
+          width: 16%;
+        }
+        .policy-section table.device-permission-table th:nth-child(3),
+        .policy-section table.device-permission-table td:nth-child(3) {
+          width: 38%;
+        }
+        .policy-section table.device-permission-table th:nth-child(4),
+        .policy-section table.device-permission-table td:nth-child(4) {
+          width: 28%;
+        }
+        
         /* Header 样式 */
         .site-header {
             position: fixed;
@@ -435,7 +456,7 @@
                     <p><strong>2.8 设备权限调用汇总</strong></p>
                     <p>当我们提供somo 有时 平台服务时，会调用您的主要设备权限汇总如下。您可以在设备的设置功能中选择关闭部分或全部权限。在不同设备中，权限显示方式及关闭方式可能有所不同，具体请参考设备及系统开发方说明或指引：</p>
                     
-                    <table>
+                    <table class="device-permission-table">
                         <thead>
                             <tr>
                                 <th>设备权限</th>
