@@ -303,6 +303,11 @@ body {
     overflow: visible;
     transform: translateY(-0.05em);
 }
+/* Android 图标偏宽偏扁，适当放大以与 App Store 图标视觉等大、天线完整可见 */
+.appstore-btn svg.android-icon{
+    width: 1.5em;
+    height: 1.5em;
+}
 .appstore-btn:hover { background: var(--button-hover); }
 .appstore-btn:active { transform: translateY(1px); }
 
