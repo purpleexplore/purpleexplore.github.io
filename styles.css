@@ -306,6 +306,14 @@ body {
 .appstore-btn:hover { background: var(--button-hover); }
 .appstore-btn:active { transform: translateY(1px); }
 
+.download-buttons {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
 .scroll-indicator { position: absolute; bottom: 72px; left: 50%; transform: translateX(-50%);}
 .scroll-indicator img {
     width: 32px;
