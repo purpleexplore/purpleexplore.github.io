@@ -1,0 +1,1456 @@
+:root {
+  --design-width: 402px;
+  --design-height: 874px;
+  --scale: 1;
+  --mint: #d5f7ef;
+  --mint-clear: rgba(213, 247, 239, 0);
+  --mint-strong: #8ee4d1;
+  --ink: #151515;
+  --line: #dadada;
+  --intro-loop: 3s;
+  --intro-mint: #c7ebe4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: #000;
+  color: var(--ink);
+}
+
+body {
+  display: grid;
+  place-items: start center;
+}
+
+button {
+  border: 0;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.phone {
+  position: relative;
+  width: var(--design-width);
+  height: var(--design-height);
+  overflow: hidden;
+  background: #000;
+  transform: scale(var(--scale));
+  transform-origin: top center;
+}
+
+.screen {
+  display: none;
+  position: absolute;
+  inset: 0;
+  width: var(--design-width);
+  height: var(--design-height);
+  overflow: hidden;
+}
+
+.screen.is-active {
+  display: block;
+}
+
+.screen-result {
+  background: linear-gradient(180deg, #f7fcfa 0 699.2px, #d2f0e7 874px);
+}
+
+.screen-select {
+  background: var(--mint);
+}
+
+.screen-select.is-intro,
+.screen-select.is-intro-out {
+  background: linear-gradient(180deg, #c7ebe4 0%, #a9d7cf 100%);
+}
+
+.hero,
+.result-hero {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 402px;
+  height: 438px;
+  background-position: top center;
+  background-size: 402px 438px;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 96px;
+  background: linear-gradient(180deg, rgba(213, 247, 239, 0) 0%, rgba(213, 247, 239, 0.22) 52%, rgba(213, 247, 239, 1) 100%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Mint placeholder that covers the scene image while it loads on H5, then
+   fades out to reveal the (still-blurred) photo for a soft blur->clear reveal
+   during the intro. Uses the same mint as the screen background so the top and
+   bottom halves read as one continuous colour while loading. */
+.hero-loader {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background:
+    radial-gradient(120% 85% at 50% 40%, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0) 55%),
+    radial-gradient(130% 90% at 50% 100%, rgba(60, 150, 135, 0.1), rgba(60, 150, 135, 0) 60%),
+    var(--intro-mint);
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity 900ms ease;
+}
+
+.hero-loader.is-hidden {
+  opacity: 0;
+}
+
+.hero-decor {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero-word {
+  position: absolute;
+  display: block;
+  width: 130px;
+  object-fit: contain;
+}
+
+.hero-somo {
+  left: 34px;
+  top: 58px;
+  height: 37px;
+}
+
+.hero-with {
+  left: 236px;
+  top: 106px;
+  height: 71px;
+}
+
+.hero-you {
+  left: 33px;
+  top: 353px;
+  height: 34px;
+}
+
+.select-intro {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.intro-copy {
+  position: relative;
+  z-index: 2;
+  margin-top: 18px;
+  opacity: 1;
+  color: #fff;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1.55;
+  text-align: center;
+  letter-spacing: 0;
+  text-shadow: none;
+  will-change: opacity, transform;
+  transform: translateZ(0);
+}
+
+.intro-ring {
+  position: absolute;
+  left: 50%;
+  top: 53%;
+  z-index: 1;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  border: 9px solid rgba(255, 255, 255, 0.88);
+  filter: blur(4px);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.78);
+}
+
+.intro-ring-two {
+  width: 322px;
+  height: 322px;
+  border-width: 7px;
+  opacity: 0;
+}
+
+.intro-ring-three {
+  width: 394px;
+  height: 394px;
+  border-width: 5px;
+  filter: blur(8px);
+}
+
+.intro-decoration {
+  position: absolute;
+  left: -116px;
+  top: 655px;
+  z-index: 1;
+  width: 636px;
+  height: 143px;
+  object-fit: fill;
+  opacity: 0.2;
+  filter: brightness(0) saturate(100%) invert(63%) sepia(22%) saturate(523%) hue-rotate(121deg) brightness(96%) contrast(86%);
+  pointer-events: none;
+  transform: translate3d(0, 0, 0);
+}
+
+.intro-result-stars {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  width: 402px;
+  height: 874px;
+  opacity: 0.46;
+  pointer-events: none;
+  transform: translate3d(0, 0, 0);
+}
+
+.intro-result-star {
+  position: absolute;
+  display: block;
+  opacity: 0.78;
+  overflow: visible;
+}
+
+.intro-result-star1 {
+  left: 30px;
+  top: 664px;
+  width: 20px;
+  height: 33px;
+}
+
+.intro-result-star2 {
+  left: 112px;
+  top: 626px;
+  width: 50px;
+  height: 27px;
+}
+
+.intro-result-star3 {
+  right: 40px;
+  top: 704px;
+  width: 19px;
+  height: 34px;
+}
+
+.intro-sparkles {
+  position: absolute;
+  left: 50%;
+  top: 53%;
+  width: 340px;
+  height: 340px;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.intro-sparkle,
+.intro-dot,
+.intro-word {
+  position: absolute;
+  opacity: 0;
+  transform-origin: center;
+  will-change: opacity, transform;
+}
+
+.intro-word {
+  display: block;
+  width: 130px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.78));
+}
+
+.intro-word-somo {
+  left: 2px;
+  top: 42px;
+  height: 37px;
+}
+
+.intro-word-with {
+  right: -6px;
+  top: 104px;
+  height: 71px;
+}
+
+.intro-word-you {
+  left: 8px;
+  bottom: 44px;
+  height: 34px;
+  filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.9));
+}
+
+.intro-sparkle {
+  width: 16px;
+  height: 16px;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.72));
+}
+
+.intro-sparkle-a {
+  left: 58px;
+  top: 74px;
+}
+
+.intro-sparkle-b {
+  right: 58px;
+  top: 112px;
+  width: 13px;
+  height: 13px;
+}
+
+.intro-sparkle-c {
+  left: 92px;
+  bottom: 70px;
+  width: 12px;
+  height: 12px;
+}
+
+.intro-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+}
+
+.intro-dot-a {
+  right: 90px;
+  top: 76px;
+}
+
+.intro-dot-b {
+  left: 74px;
+  top: 154px;
+  width: 4px;
+  height: 4px;
+}
+
+.intro-dot-c {
+  right: 84px;
+  bottom: 94px;
+  width: 4px;
+  height: 4px;
+}
+
+.intro-dot-d {
+  left: 138px;
+  bottom: 60px;
+  width: 3px;
+  height: 3px;
+}
+
+.top-toolbar {
+  position: absolute;
+  left: 16px;
+  top: 63px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 370px;
+  height: 44px;
+  pointer-events: none;
+}
+
+.glass-button {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0.58)),
+    rgba(247, 247, 247, 0.52);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.72),
+    0 10px 24px rgba(0, 0, 0, 0.16);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  pointer-events: auto;
+}
+
+.glass-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgba(0, 0, 0, 0.12);
+  mix-blend-mode: plus-lighter;
+  pointer-events: none;
+}
+
+.glass-button img {
+  position: relative;
+  z-index: 1;
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.choice-panel {
+  position: absolute;
+  left: 0;
+  top: 436px;
+  width: 402px;
+  height: 438px;
+  background: var(--mint);
+  overflow: hidden;
+  transform-origin: bottom center;
+  z-index: 2;
+}
+
+.water-wash {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 402px;
+  height: 874px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.wash-glow {
+  position: absolute;
+  left: -120px;
+  top: 320px;
+  width: 650px;
+  height: 130px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(226, 250, 243, 0.78) 0%, rgba(196, 238, 226, 0.54) 38%, rgba(213, 247, 239, 0) 72%);
+  filter: blur(18px);
+  opacity: 0;
+  transform: translateX(-80px) rotate(-4deg);
+}
+
+.wash-image-glow {
+  position: absolute;
+  left: -120px;
+  top: 80px;
+  width: 650px;
+  height: 420px;
+  border-radius: 48%;
+  background:
+    radial-gradient(ellipse at center, rgba(226, 250, 243, 0.58) 0%, rgba(196, 238, 226, 0.38) 42%, rgba(213, 247, 239, 0) 76%);
+  filter: blur(28px);
+  opacity: 0;
+  transform: translateY(130px) rotate(-5deg) scaleX(0.92);
+}
+
+.wash-layer {
+  position: absolute;
+  left: 50%;
+  bottom: -500px;
+  width: 640px;
+  height: 560px;
+  border-radius: 48% 52% 0 0 / 18% 20% 0 0;
+  transform: translateX(-50%);
+  filter: blur(16px);
+  opacity: 0;
+}
+
+.wash-white {
+  background: rgba(229, 252, 246, 0.82);
+}
+
+.wash-white-soft {
+  width: 610px;
+  background: rgba(217, 247, 239, 0.54);
+  filter: blur(22px);
+}
+
+.wash-pale {
+  width: 590px;
+  background: rgba(229, 252, 246, 0.62);
+}
+
+.wash-white-thin {
+  width: 540px;
+  height: 500px;
+  background: rgba(217, 247, 239, 0.46);
+  filter: blur(10px);
+}
+
+.wash-mint {
+  width: 620px;
+  background: rgba(247, 252, 250, 0.72);
+}
+
+.wash-final {
+  width: 680px;
+  background: var(--mint);
+  filter: blur(8px);
+}
+
+.choice-panel .question,
+.option-card,
+.confirm {
+  will-change: opacity, transform, filter;
+  z-index: 1;
+}
+
+.screen-select.is-entering .hero {
+  filter: blur(20px);
+  transform: scale(1.075);
+  transform-origin: center top;
+}
+
+.screen-select.is-intro .hero {
+  height: 438px;
+  background-size: 402px 438px;
+  background-position: top center;
+  filter: blur(16px);
+  transform: scale(1.09);
+}
+
+/* On mobile Safari the hero's blur is hard-clipped at its box, so the soft
+   bottom edge desktop shows is lost and the dark vignette reads as a hard line
+   above the mint. Cover the seam with a mint band on ::before (a separate layer
+   so its opacity can animate; a baked background-image would snap off). It sits
+   under the wash/pulse layers and dissolves gently once they cover the seam.
+   Scoped to touch devices, so desktop stays as authored. */
+@media (hover: none) and (pointer: coarse) {
+  .screen-select .hero::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 68px;
+    background: linear-gradient(180deg, var(--mint-clear) 0%, var(--mint) calc(100% - 20px), var(--mint) 100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1300ms cubic-bezier(0.33, 0, 0.4, 1) 600ms;
+  }
+
+  /* While the mint loader covers the hero, hold the seam band solid underneath
+     so that the moment the loader fades (whenever the image finishes loading),
+     the hero-bottom / mint seam stays hidden. Once the scene is revealed the
+     band dissolves gently on its own instead of snapping off. */
+  .screen-select.is-scene-loading .hero::before {
+    opacity: 1;
+    transition: none;
+  }
+}
+
+.screen-select.is-intro .hero-decor,
+.screen-select.is-intro .top-toolbar {
+  opacity: 0;
+}
+
+.screen-select.is-intro .select-intro {
+  opacity: 1;
+}
+
+.screen-select.is-intro .intro-copy {
+  animation: copyBreath var(--intro-loop) linear infinite;
+}
+
+.screen-select.is-intro .intro-ring-one {
+  animation: introRing var(--intro-loop) ease-in-out 0ms infinite;
+}
+
+.screen-select.is-intro .intro-ring-two {
+  animation: introRing var(--intro-loop) ease-in-out 0ms infinite;
+}
+
+.screen-select.is-intro .intro-ring-three {
+  animation: introRing var(--intro-loop) ease-in-out 0ms infinite;
+}
+
+.screen-select.is-intro .intro-word-somo {
+  opacity: 0.58;
+  animation: introWordDrift var(--intro-loop) linear 0ms infinite;
+}
+
+.screen-select.is-intro .intro-word-with {
+  opacity: 0.58;
+  animation: introWordDrift var(--intro-loop) linear 0ms infinite;
+}
+
+.screen-select.is-intro .intro-word-you {
+  opacity: 0.72;
+  animation: introWordDriftStrong var(--intro-loop) linear 0ms infinite;
+}
+
+.screen-select.is-intro .intro-sparkle-a {
+  animation: introSparkleFloat var(--intro-loop) ease-in-out 0ms infinite;
+}
+
+.screen-select.is-intro .intro-sparkle-b {
+  animation: introSparkleFloat var(--intro-loop) ease-in-out 0ms infinite reverse;
+}
+
+.screen-select.is-intro .intro-sparkle-c {
+  animation: introSparkleFloat var(--intro-loop) ease-in-out 0ms infinite;
+}
+
+.screen-select.is-intro .intro-dot-a {
+  animation: introDotBlink var(--intro-loop) ease-in-out 0ms infinite;
+}
+
+.screen-select.is-intro .intro-dot-b {
+  animation: introDotBlink var(--intro-loop) ease-in-out 0ms infinite reverse;
+}
+
+.screen-select.is-intro .intro-dot-c {
+  animation: introDotBlink var(--intro-loop) ease-in-out 0ms infinite;
+}
+
+.screen-select.is-intro .intro-dot-d {
+  animation: introDotBlink var(--intro-loop) ease-in-out 0ms infinite reverse;
+}
+
+.screen-select.is-intro-out .select-intro {
+  opacity: 0;
+  transform: translateY(-10px) scale(1.015);
+  filter: blur(8px);
+  transition: opacity 980ms ease, transform 1180ms cubic-bezier(0.16, 0.72, 0.16, 1), filter 980ms ease;
+}
+
+.screen-select.is-intro-out .top-toolbar,
+.screen-select.is-intro-out .hero-decor {
+  opacity: 1;
+  transition: opacity 520ms ease 180ms;
+}
+
+.screen-select.is-intro-out .hero {
+  filter: blur(8px);
+  transform: scale(1.045);
+  transition: filter 1180ms ease, transform 1180ms cubic-bezier(0.16, 0.72, 0.16, 1);
+}
+
+.screen-select.is-intro-out .hero::after {
+  opacity: 1;
+}
+
+.screen-select.is-entering .hero::after {
+  opacity: 1;
+}
+
+.screen-select.is-entering.is-panel-visible .hero {
+  height: 438px;
+  background-size: 402px 438px;
+  background-position: top center;
+  filter: blur(0);
+  transform: scale(1);
+  transition: height 1420ms ease, background-size 1420ms ease, background-position 1420ms ease, filter 1420ms ease, transform 1420ms cubic-bezier(0.18, 0.78, 0.18, 1);
+}
+
+.screen-select.is-entering.is-panel-visible .hero::after {
+  opacity: 0;
+  transition: opacity 1180ms ease 280ms;
+}
+
+/* On touch devices the hero's baked mint fade only reads as seamless while the
+   blur is on, so don't let the hero sharpen mid-transition. Delay the un-blur
+   until the white wash has finished sweeping up (~1.6s after it starts): during
+   a transition's delay the blur simply holds at 16, then eases off once the
+   wash covers the seam. Desktop/Android are unaffected. */
+@media (hover: none) and (pointer: coarse) {
+  .screen-select.is-entering.is-panel-visible .hero {
+    transition: height 1420ms ease, background-size 1420ms ease,
+      background-position 1420ms ease, filter 900ms ease 1600ms,
+      transform 1420ms cubic-bezier(0.18, 0.78, 0.18, 1);
+  }
+}
+
+.screen-select.is-entering .water-wash {
+  display: block;
+}
+
+.screen-select.is-entering .choice-panel {
+  background: transparent;
+}
+
+.screen-select.is-entering .choice-panel .question,
+.screen-select.is-entering .option-card,
+.screen-select.is-entering .confirm {
+  opacity: 0;
+  transform: translateY(22px);
+}
+
+.screen-select.is-entering .option-card {
+  filter: blur(8px);
+  transform: translateY(24px) scale(0.985);
+}
+
+.screen-select.is-entering .option-card > img:not(.check),
+.screen-select.is-entering .option-card span {
+  filter: blur(10px);
+}
+
+.screen-select.is-entering.is-panel-visible .wash-white {
+  animation: washRise 1100ms cubic-bezier(0.18, 0.82, 0.14, 1) 0ms both, washRipple 920ms ease-in-out 0ms both;
+}
+
+.screen-select.is-entering.is-panel-visible .wash-glow {
+  animation: glowSweep 1180ms ease-out 40ms both;
+}
+
+.screen-select.is-entering.is-panel-visible .wash-image-glow {
+  animation: imageGlowSweep 1420ms ease-out 40ms both;
+}
+
+.screen-select.is-entering.is-panel-visible .wash-white-soft {
+  animation: washRise 1130ms cubic-bezier(0.18, 0.82, 0.14, 1) 45ms both, washRippleAlt 950ms ease-in-out 45ms both;
+}
+
+.screen-select.is-entering.is-panel-visible .wash-pale {
+  animation: washRise 1160ms cubic-bezier(0.18, 0.82, 0.14, 1) 90ms both, washRippleAlt 980ms ease-in-out 90ms both;
+}
+
+.screen-select.is-entering.is-panel-visible .wash-white-thin {
+  animation: washRise 1180ms cubic-bezier(0.18, 0.82, 0.14, 1) 135ms both, washRipple 990ms ease-in-out 135ms both;
+}
+
+.screen-select.is-entering.is-panel-visible .wash-mint {
+  animation: washRise 1220ms cubic-bezier(0.18, 0.82, 0.14, 1) 210ms both, washRipple 1020ms ease-in-out 210ms both;
+}
+
+.screen-select.is-entering.is-panel-visible .wash-final {
+  animation: washRiseFinal 1280ms cubic-bezier(0.18, 0.82, 0.14, 1) 330ms both, washRippleAlt 1080ms ease-in-out 330ms both;
+}
+
+.screen-select.is-entering.is-content-visible .choice-panel {
+  background: var(--mint);
+  transition: background 260ms ease;
+}
+
+.screen-select.is-entering.is-content-visible .water-wash {
+  opacity: 0;
+  transition: opacity 360ms ease 880ms;
+}
+
+.screen-select.is-entering.is-content-visible .choice-panel .question {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 820ms ease, transform 980ms cubic-bezier(0.16, 0.68, 0.18, 1);
+}
+
+.screen-select.is-entering.is-content-visible .option-card {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0) scale(1);
+  transition: opacity 1120ms ease, transform 1380ms cubic-bezier(0.16, 0.68, 0.18, 1), filter 1180ms ease;
+}
+
+.screen-select.is-entering.is-content-visible .option-card > img:not(.check),
+.screen-select.is-entering.is-content-visible .option-card span {
+  filter: blur(0);
+  transition: filter 1380ms ease;
+}
+
+.screen-select.is-entering.is-content-visible .confirm.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 520ms ease, transform 520ms ease;
+}
+
+@keyframes washRise {
+  0% {
+    bottom: -500px;
+    opacity: 0;
+    transform: translateX(-50%) scaleX(0.96) rotate(-2deg);
+  }
+  18% {
+    opacity: 0.95;
+  }
+  100% {
+    bottom: -116px;
+    opacity: 0.88;
+    transform: translateX(-50%) scaleX(1.03) rotate(1deg);
+  }
+}
+
+@keyframes washRiseFinal {
+  0% {
+    bottom: -500px;
+    opacity: 0;
+    transform: translateX(-50%) scaleX(0.98) rotate(2deg);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    bottom: -116px;
+    opacity: 1;
+    transform: translateX(-50%) scaleX(1.02) rotate(-1deg);
+  }
+}
+
+@keyframes glowSweep {
+  0% {
+    opacity: 0;
+    transform: translateX(-140px) translateY(16px) rotate(-6deg) scaleX(0.92);
+  }
+  18% {
+    opacity: 0.9;
+  }
+  55% {
+    opacity: 0.78;
+    transform: translateX(8px) translateY(-4px) rotate(2deg) scaleX(1.04);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(95px) translateY(-18px) rotate(5deg) scaleX(1.12);
+  }
+}
+
+@keyframes imageGlowSweep {
+  0% {
+    opacity: 0;
+    transform: translateY(190px) translateX(-60px) rotate(-8deg) scaleX(0.88);
+  }
+  18% {
+    opacity: 0.82;
+  }
+  48% {
+    opacity: 0.72;
+    transform: translateY(26px) translateX(8px) rotate(1deg) scaleX(1.06);
+  }
+  78% {
+    opacity: 0.38;
+    transform: translateY(-92px) translateX(32px) rotate(5deg) scaleX(1.12);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-150px) translateX(58px) rotate(8deg) scaleX(1.18);
+  }
+}
+
+@keyframes washRipple {
+  0% {
+    border-radius: 42% 58% 0 0 / 16% 22% 0 0;
+  }
+  35% {
+    border-radius: 58% 42% 0 0 / 24% 15% 0 0;
+  }
+  70% {
+    border-radius: 47% 53% 0 0 / 18% 26% 0 0;
+  }
+  100% {
+    border-radius: 53% 47% 0 0 / 22% 17% 0 0;
+  }
+}
+
+@keyframes washRippleAlt {
+  0% {
+    border-radius: 57% 43% 0 0 / 20% 15% 0 0;
+  }
+  35% {
+    border-radius: 44% 56% 0 0 / 14% 25% 0 0;
+  }
+  70% {
+    border-radius: 55% 45% 0 0 / 27% 16% 0 0;
+  }
+  100% {
+    border-radius: 48% 52% 0 0 / 18% 22% 0 0;
+  }
+}
+
+@keyframes introRing {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.58);
+  }
+  2% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.78;
+  }
+  98% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.16);
+  }
+}
+
+@keyframes introCopyFloat {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+  42% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes copyBreath {
+  0% {
+    transform: translateY(3px);
+    filter: blur(1.4px);
+    opacity: 0.4;
+  }
+  8% {
+    transform: translateY(2.5px);
+    filter: blur(1px);
+    opacity: 0.6;
+  }
+  22% {
+    transform: translateY(1.2px);
+    filter: blur(0.55px);
+    opacity: 0.78;
+  }
+  36% {
+    transform: translateY(-1.2px);
+    filter: blur(0.2px);
+    opacity: 0.93;
+  }
+  46%,
+  54% {
+    transform: translateY(-2.7px);
+    filter: blur(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-3px);
+    filter: blur(0);
+    opacity: 1;
+  }
+  64% {
+    transform: translateY(-1.2px);
+    filter: blur(0.2px);
+    opacity: 0.93;
+  }
+  78% {
+    transform: translateY(1.2px);
+    filter: blur(0.55px);
+    opacity: 0.78;
+  }
+  92% {
+    transform: translateY(2.5px);
+    filter: blur(1px);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(3px);
+    filter: blur(1.4px);
+    opacity: 0.4;
+  }
+}
+
+@keyframes introWordDrift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  36% {
+    transform: translate3d(2px, -2px, 0);
+  }
+  66% {
+    transform: translate3d(0.8px, -0.8px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes introWordDriftStrong {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  36% {
+    transform: translate3d(2.5px, -2.5px, 0);
+  }
+  66% {
+    transform: translate3d(1px, -1px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes introSparkleFloat {
+  0%,
+  100% {
+    opacity: 0.22;
+    transform: translate3d(0, 0, 0) rotate(-18deg) scale(0.76);
+  }
+  38% {
+    opacity: 0.95;
+    transform: translate3d(6px, -8px, 0) rotate(22deg) scale(1.08);
+  }
+  68% {
+    opacity: 0.52;
+    transform: translate3d(2px, -4px, 0) rotate(8deg) scale(0.9);
+  }
+}
+
+@keyframes introDotBlink {
+  0%,
+  100% {
+    opacity: 0.16;
+    transform: scale(0.68);
+  }
+  46% {
+    opacity: 0.9;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes sparkleSpin {
+  0%,
+  100% {
+    opacity: 0.48;
+    transform: rotate(-16deg) scale(0.86);
+  }
+  50% {
+    opacity: 1;
+    transform: rotate(28deg) scale(1.08);
+  }
+}
+
+@keyframes sparkleDot {
+  0%,
+  100% {
+    opacity: 0.36;
+    transform: scale(0.72);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+.question {
+  width: 361px;
+  height: 49px;
+  padding: 14px 15px 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: none;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+}
+
+.choice-panel .question {
+  position: absolute;
+  left: 20.5px;
+  top: 19px;
+}
+
+.options {
+  position: absolute;
+  left: 20.5px;
+  top: 87px;
+  display: grid;
+  grid-template-columns: repeat(4, 85px);
+  gap: 7px;
+}
+
+.option-card {
+  position: relative;
+  width: 85px;
+  height: 111px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.option-card:active {
+  transform: scale(0.98);
+}
+
+.option-card.is-selected {
+  border-color: var(--mint-strong);
+  box-shadow: 0 0 0 1px var(--mint-strong);
+}
+
+.option-card > img:not(.check) {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 85px;
+  height: 85px;
+  object-fit: contain;
+  opacity: 1;
+}
+
+.option-card span {
+  position: absolute;
+  left: 0;
+  bottom: 12px;
+  width: 100%;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.check {
+  position: absolute;
+  left: auto;
+  top: auto;
+  right: 6px;
+  bottom: 6px;
+  width: 15px;
+  height: 15px;
+  display: none;
+  object-fit: contain;
+  z-index: 2;
+}
+
+.option-card.is-selected .check {
+  display: block;
+}
+
+.confirm {
+  position: absolute;
+  left: 129px;
+  top: 283px;
+  width: 144px;
+  height: 53px;
+  border-radius: 999px;
+  background: #fff;
+  color: #303030;
+  font-size: 15px;
+  box-shadow: 0 18px 42px rgba(103, 201, 183, 0.26);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.confirm.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.result-hero {
+  height: 438px;
+  background-size: 402px 438px;
+  z-index: 2;
+}
+
+.question-flight {
+  position: absolute;
+  left: 20.5px;
+  top: 456px;
+  z-index: 20;
+  display: none;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.question-flight.is-active {
+  display: block;
+  transform: translateY(0);
+}
+
+.question-flight.is-moving {
+  transform: translateY(-41px);
+  transition: transform 980ms cubic-bezier(0.16, 0.68, 0.18, 1), opacity 980ms ease;
+}
+
+.result-panel {
+  position: absolute;
+  left: 0;
+  top: 437px;
+  width: 402px;
+  height: 437px;
+  padding: 0;
+  background: linear-gradient(180deg, #f7fcfa 60%, #d2f0e7 100%);
+  z-index: 1;
+}
+
+.screen-result.is-entering .result-panel {
+  opacity: 0;
+  transform: translateY(42px);
+  filter: blur(10px);
+}
+
+.screen-result.is-entering.is-result-visible .result-panel {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+  transition: opacity 980ms ease, transform 1180ms cubic-bezier(0.16, 0.68, 0.18, 1), filter 1120ms ease;
+}
+
+.screen-result.is-entering .result-star,
+.screen-result.is-entering .result-title,
+.screen-result.is-entering .result-image {
+  opacity: 0;
+  transform: translateY(24px);
+  filter: blur(10px);
+}
+
+.screen-result.is-entering .result-copy,
+.screen-result.is-entering .result-extension {
+  opacity: 0;
+  transform: translateX(-50%) translateY(24px);
+  filter: blur(10px);
+}
+
+.screen-result.is-entering.is-result-visible .result-star,
+.screen-result.is-entering.is-result-visible .result-title,
+.screen-result.is-entering.is-result-visible .result-image {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+  transition: opacity 980ms ease 420ms, transform 1180ms cubic-bezier(0.16, 0.68, 0.18, 1) 420ms, filter 1120ms ease 420ms;
+}
+
+.screen-result.is-entering.is-result-visible .result-copy,
+.screen-result.is-entering.is-result-visible .result-extension {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  filter: blur(0);
+  transition: opacity 980ms ease 500ms, transform 1180ms cubic-bezier(0.16, 0.68, 0.18, 1) 500ms, filter 1120ms ease 500ms;
+}
+
+.screen-result.is-entering.is-result-visible .result-star,
+.screen-result.is-entering.is-result-visible .result-title {
+  filter: blur(0);
+  transition: opacity 620ms ease 260ms, transform 720ms cubic-bezier(0.2, 0.8, 0.18, 1) 260ms, filter 760ms ease 260ms;
+}
+
+.result-art {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 402px;
+  height: 210px;
+  overflow: hidden;
+}
+
+.result-decoration {
+  position: absolute;
+  left: -110px;
+  top: 37px;
+  width: 636px;
+  height: 143px;
+  object-fit: fill;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.result-title {
+  position: absolute;
+  left: 37px;
+  top: 168px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #89cfba;
+  font-size: 24px;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-weight: 400;
+  line-height: 35px;
+  letter-spacing: 0;
+  text-shadow: 0 1px 0 #fff;
+  z-index: 4;
+}
+
+.result-star {
+  position: absolute;
+  pointer-events: none;
+  z-index: 3;
+  overflow: visible;
+}
+
+.result-star1 {
+  left: 42px;
+  top: 45px;
+  width: 17.935px;
+  height: 32.935px;
+}
+
+.result-star2 {
+  width: 49.935px;
+  height: 27px;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.result-star3 {
+  right: 39px;
+  top: 173px;
+  width: 19px;
+  height: 33.935px;
+}
+
+.sparkle-piece,
+.sparkle-dot,
+.sparkle-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.screen-result.is-result-visible .sparkle-piece {
+  animation: sparkleSpin 4200ms ease-in-out infinite;
+}
+
+.screen-result.is-result-visible .sparkle-dot,
+.screen-result.is-result-visible .sparkle-ring {
+  animation: sparkleDot 3600ms ease-in-out infinite;
+}
+
+.screen-result.is-result-visible .sparkle-a {
+  animation-delay: 900ms;
+}
+
+.screen-result.is-result-visible .sparkle-b {
+  animation-delay: 1800ms;
+}
+
+.screen-result.is-result-visible .sparkle-c {
+  animation-delay: 520ms;
+}
+
+.screen-result.is-result-visible .sparkle-d {
+  animation-delay: 1500ms;
+}
+
+.screen-result.is-result-visible .sparkle-e {
+  animation-delay: 2300ms;
+}
+
+.screen-result.is-result-visible .sparkle-f {
+  animation-delay: 1100ms;
+}
+
+.screen-result.is-result-visible .sparkle-g {
+  animation-delay: 320ms;
+}
+
+.screen-result.is-result-visible .sparkle-h {
+  animation-delay: 2000ms;
+}
+
+.screen-result.is-result-visible .sparkle-i {
+  animation-delay: 760ms;
+}
+
+.screen-result.is-result-visible .sparkle-j {
+  animation-delay: 2700ms;
+}
+
+.result-image {
+  position: absolute;
+  right: 0;
+  top: 13px;
+  width: 185px;
+  height: 185px;
+  object-fit: contain;
+  transform: none;
+  z-index: 3;
+}
+
+.result-stamp {
+  display: none;
+}
+
+.result-copy {
+  position: absolute;
+  left: 50%;
+  top: 227px;
+  width: 327px;
+  margin: 0;
+  color: #000;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  text-align: left;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+}
+
+.result-extension {
+  position: absolute;
+  left: 50%;
+  top: 344px;
+  width: 327px;
+  margin: 0;
+  color: rgba(0, 0, 0, 0.46);
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+  text-align: left;
+  transform: translateX(-50%);
+}
+
+.actions {
+  display: none;
+}
+
+.pill {
+  width: 160px;
+  height: 58px;
+  border-radius: 999px;
+  background: #fff;
+  color: #3a3a3a;
+  font-size: 20px;
+  line-height: 58px;
+  box-shadow: 0 18px 42px rgba(103, 201, 183, 0.2);
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 26px;
+  z-index: 20;
+  padding: 11px 16px;
+  border-radius: 999px;
+  background: rgba(16, 24, 23, 0.84);
+  color: #fff;
+  font-size: 15px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 12px);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
