@@ -1,0 +1,18 @@
+<svg width="130" height="71" viewBox="0 0 130 71" fill="none" xmlns="http://www.w3.org/2000/svg">
+<style>
+  .heroText{animation:textFloat 10.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+  .spark{animation:sparkSpin 4.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+  .dot,.ring{animation:dotBlink 3.9s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+  .d1{animation-delay:.7s}.d2{animation-delay:1.6s}.d3{animation-delay:2.4s}.d4{animation-delay:.3s}.d5{animation-delay:1.1s}
+  @keyframes textFloat{0%,100%{opacity:.64;transform:translate(0,0)}40%{opacity:.82;transform:translate(10px,-10px)}70%{opacity:.72;transform:translate(5px,-5px)}}
+  @keyframes sparkSpin{0%,100%{opacity:.5;transform:rotate(-15deg) scale(.88)}50%{opacity:.86;transform:rotate(28deg) scale(1.08)}}
+  @keyframes dotBlink{0%,100%{opacity:.28;transform:scale(.72)}50%{opacity:.72;transform:scale(1.18)}}
+</style>
+<path class="heroText" d="M52.2173 35.279H53.7383L55.1553 40.362L56.5333 35.279H57.8073L59.1853 40.362L60.6023 35.279H62.1233L59.8483 42H58.5743L57.1703 36.969L55.7663 42H54.4923L52.2173 35.279ZM63.9493 32.588C64.2353 32.588 64.465 32.6747 64.6383 32.848C64.8203 33.0127 64.9113 33.2337 64.9113 33.511C64.9113 33.771 64.816 33.9963 64.6253 34.187C64.4347 34.3603 64.2093 34.447 63.9493 34.447C63.6893 34.447 63.464 34.3603 63.2733 34.187C63.0913 34.005 63.0003 33.7797 63.0003 33.511C63.0003 33.2337 63.0913 33.0127 63.2733 32.848C63.4467 32.6747 63.672 32.588 63.9493 32.588ZM63.2603 35.279H64.6383V42H63.2603V35.279ZM68.5446 33.108V35.279H70.0786V36.423H68.5446V40.323C68.5446 40.4963 68.5836 40.6307 68.6616 40.726C68.7483 40.8127 68.8696 40.856 69.0256 40.856H69.9096V42H68.8046C68.224 42 67.8036 41.8483 67.5436 41.545C67.2923 41.2677 67.1666 40.8603 67.1666 40.323V36.423H65.9186V35.279H67.1666V33.68L68.5446 33.108ZM71.1882 32.536H72.5662V36.228C72.8175 35.8293 73.1295 35.539 73.5022 35.357C73.8229 35.1837 74.2042 35.097 74.6462 35.097C75.4522 35.097 76.0632 35.3353 76.4792 35.812C76.8692 36.2627 77.0642 36.9343 77.0642 37.827V42H75.6862V38.061C75.6862 37.4803 75.5649 37.0297 75.3222 36.709C75.0622 36.3883 74.6679 36.228 74.1392 36.228C73.6712 36.228 73.2942 36.4143 73.0082 36.787C72.7135 37.1597 72.5662 37.6407 72.5662 38.23V42H71.1882V32.536Z" fill="white"/>
+<path class="spark d2" d="M34.887 68.4226L34.1827 64.3092L30.2665 65.7743L30.1538 65.577L33.3656 62.9005L30.1538 60.2522L30.2665 60.055L34.1827 61.4918L34.887 57.3784H35.1124L35.8168 61.4918L39.7329 60.055L39.8456 60.2522L36.6338 62.9005L39.8456 65.577L39.7329 65.7743L35.8168 64.3092L35.1124 68.4226H34.887Z" fill="white"/>
+<circle class="dot d1" cx="78.4674" cy="21.4674" r="1.46739" fill="white"/>
+<circle class="ring d3" cx="78.4674" cy="21.4674" r="1.96739" stroke="white"/>
+<circle class="ring d4" cx="43.4674" cy="45.4674" r="1.96739" stroke="white"/>
+<circle class="dot d5" cx="64.4674" cy="1.46739" r="1.46739" fill="white"/>
+<circle class="dot d3" cx="89.4674" cy="15.4674" r="1.46739" fill="white"/>
+</svg>

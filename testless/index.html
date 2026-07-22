@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>somo with you</title>
+    <link rel="stylesheet" href="./styles.css?v=17" />
+    <style>
+    /* Safari横线修复 */
+    .intro-ring {
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+    }
+    .wash-layer {
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      will-change: auto;
+    }
+    .intro-decoration {
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+    }
+    /* 修复Safari中可能由backdrop-filter产生的横线伪影 */
+    .glass-button {
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+    }
+    /* 修复canvas在Safari中的渲染问题 */
+    #waterRippleCanvas {
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+    }
+    /* 确保圆环是正圆而非椭圆 */
+    .intro-ring-one, .intro-ring-two, .intro-ring-three {
+      aspect-ratio: 1 / 1;
+      -webkit-aspect-ratio: 1 / 1;
+    }
+  </style>
+  </head>
+  <body>
+    <main class="phone" aria-live="polite">
+      <section class="screen screen-loading is-active" id="loadingScreen" aria-label="页面加载中" aria-hidden="false">
+        <div class="select-intro loading-intro" aria-hidden="true">
+          <span class="intro-ring intro-ring-one"></span>
+          <span class="intro-ring intro-ring-two"></span>
+          <span class="intro-ring intro-ring-three"></span>
+          <img class="intro-decoration" src="./assets/result-decoration-lines.svg" alt="" />
+          <div class="intro-result-stars">
+            <svg class="intro-result-star intro-result-star1" viewBox="0 0 20 33" fill="none">
+              <path class="intro-star-piece" d="M6.37424 6.81422L8.05239 9.04814L10.8061 8.57466L11.9907 8.37046L11.3009 9.3543L9.69435 11.6411L10.997 14.1132L11.5565 15.1776L10.4077 14.8243L7.73654 14.0046L5.78695 16.0062L4.94889 16.8677L4.92863 15.6653L4.8834 12.8716L2.37718 11.6367L1.29969 11.1049L2.43684 10.7153L5.07878 9.8087L5.47923 7.04314L5.65184 5.85391L6.37424 6.81422Z" fill="#89CFBA" stroke="#D1EFE6" />
+              <circle class="intro-star-dot" cx="3.08214" cy="31.4674" r="1.46739" fill="#89CFBA" />
+              <circle class="intro-star-dot" cx="18.0821" cy="1.46739" r="1.46739" fill="#D1EFE6" />
+            </svg>
+            <svg class="intro-result-star intro-result-star2" viewBox="0 0 50 27" fill="none">
+              <path class="intro-star-piece" d="M10.833 12.7634L13.8687 15.106L17.3389 13.4748L16.049 17.0858L18.6728 19.8821L14.8399 19.7712L12.9912 23.1306L11.9122 19.4511L8.14598 18.731L11.312 16.5678L10.833 12.7634Z" fill="#D1EFE6" />
+              <circle class="intro-star-ring" cx="2.5" cy="24.5" r="2" stroke="#89CFBA" />
+              <circle class="intro-star-dot" cx="48.4674" cy="17.4674" r="1.46739" fill="#89CFBA" />
+              <path class="intro-star-piece" d="M29.887 14.4226L29.1827 10.3092L25.2665 11.7743L25.1538 11.577L28.3656 8.90052L25.1538 6.25217L25.2665 6.05496L29.1827 7.49183L29.887 3.37844H30.1124L30.8168 7.49183L34.7329 6.05496L34.8456 6.25217L31.6338 8.90052L34.8456 11.577L34.7329 11.7743L30.8168 10.3092L30.1124 14.4226H29.887Z" fill="#89CFBA" />
+            </svg>
+            <svg class="intro-result-star intro-result-star3" viewBox="0 0 19 34" fill="none">
+              <path class="intro-star-piece" d="M5.88703 14.4226L5.18268 10.3092L1.26651 11.7743L1.15381 11.577L4.36564 8.90052L1.15381 6.25217L1.26651 6.05496L5.18268 7.49183L5.88703 3.37844H6.11242L6.81677 7.49183L10.7329 6.05496L10.8456 6.25217L7.63381 8.90052L10.8456 11.577L10.7329 11.7743L6.81677 10.3092L6.11242 14.4226H5.88703Z" fill="#D1EFE6" />
+              <circle class="intro-star-ring" cx="16.5" cy="24.4999" r="2" stroke="#89CFBA" />
+              <circle class="intro-star-dot" cx="10.4674" cy="32.4673" r="1.46739" fill="#89CFBA" />
+            </svg>
+          </div>
+          <div class="intro-sparkles">
+            <img class="intro-word intro-word-somo" src="./assets/intro-somo-static.svg" alt="" />
+            <img class="intro-word intro-word-with" src="./assets/intro-with-static.svg" alt="" />
+            <img class="intro-word intro-word-you" src="./assets/intro-you-static.svg" alt="" />
+            <svg class="intro-sparkle intro-sparkle-a" viewBox="0 0 18 18"><path d="M9 0.7L10.8 6.2L16.6 6.2L11.9 9.6L13.7 15.2L9 11.8L4.3 15.2L6.1 9.6L1.4 6.2L7.2 6.2L9 0.7Z" fill="white" /></svg>
+            <svg class="intro-sparkle intro-sparkle-b" viewBox="0 0 16 16"><path d="M8 0.9L9.2 5.6L14 4.5L10.4 8L14 11.5L9.2 10.4L8 15.1L6.8 10.4L2 11.5L5.6 8L2 4.5L6.8 5.6L8 0.9Z" fill="white" /></svg>
+            <svg class="intro-sparkle intro-sparkle-c" viewBox="0 0 18 18"><path d="M9 0.7L10.8 6.2L16.6 6.2L11.9 9.6L13.7 15.2L9 11.8L4.3 15.2L6.1 9.6L1.4 6.2L7.2 6.2L9 0.7Z" fill="white" /></svg>
+            <span class="intro-dot intro-dot-a"></span>
+            <span class="intro-dot intro-dot-b"></span>
+            <span class="intro-dot intro-dot-c"></span>
+            <span class="intro-dot intro-dot-d"></span>
+          </div>
+          <div class="intro-copy">
+            <div>今天的心情</div>
+            <div>也许藏在某个细节里</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen screen-select" id="selectScreen">
+        <div class="hero">
+          <div class="hero-loader" aria-hidden="true"></div>
+          <div class="hero-decor" aria-hidden="true">
+            <img class="hero-word hero-somo" src="./assets/hero-somo.svg?v=5" alt="" />
+            <img class="hero-word hero-with" src="./assets/hero-with.svg?v=5" alt="" />
+            <img class="hero-word hero-you" src="./assets/hero-you.svg?v=5" alt="" />
+          </div>
+        </div>
+        <div class="select-intro" aria-hidden="true">
+          <canvas class="intro-ripple-canvas" id="waterRippleCanvas"></canvas>
+          <span class="intro-ring intro-ring-one"></span>
+          <span class="intro-ring intro-ring-two"></span>
+          <span class="intro-ring intro-ring-three"></span>
+          <img class="intro-decoration" src="./assets/result-decoration-lines.svg" alt="" aria-hidden="true" />
+          <div class="intro-result-stars" aria-hidden="true">
+            <svg class="intro-result-star intro-result-star1" viewBox="0 0 20 33" fill="none">
+              <path class="intro-star-piece" d="M6.37424 6.81422L8.05239 9.04814L10.8061 8.57466L11.9907 8.37046L11.3009 9.3543L9.69435 11.6411L10.997 14.1132L11.5565 15.1776L10.4077 14.8243L7.73654 14.0046L5.78695 16.0062L4.94889 16.8677L4.92863 15.6653L4.8834 12.8716L2.37718 11.6367L1.29969 11.1049L2.43684 10.7153L5.07878 9.8087L5.47923 7.04314L5.65184 5.85391L6.37424 6.81422Z" fill="#89CFBA" stroke="#D1EFE6" />
+              <circle class="intro-star-dot" cx="3.08214" cy="31.4674" r="1.46739" fill="#89CFBA" />
+              <circle class="intro-star-dot" cx="18.0821" cy="1.46739" r="1.46739" fill="#D1EFE6" />
+            </svg>
+            <svg class="intro-result-star intro-result-star2" viewBox="0 0 50 27" fill="none">
+              <path class="intro-star-piece" d="M10.833 12.7634L13.8687 15.106L17.3389 13.4748L16.049 17.0858L18.6728 19.8821L14.8399 19.7712L12.9912 23.1306L11.9122 19.4511L8.14598 18.731L11.312 16.5678L10.833 12.7634Z" fill="#D1EFE6" />
+              <circle class="intro-star-ring" cx="2.5" cy="24.5" r="2" stroke="#89CFBA" />
+              <circle class="intro-star-dot" cx="48.4674" cy="17.4674" r="1.46739" fill="#89CFBA" />
+              <path class="intro-star-piece" d="M29.887 14.4226L29.1827 10.3092L25.2665 11.7743L25.1538 11.577L28.3656 8.90052L25.1538 6.25217L25.2665 6.05496L29.1827 7.49183L29.887 3.37844H30.1124L30.8168 7.49183L34.7329 6.05496L34.8456 6.25217L31.6338 8.90052L34.8456 11.577L34.7329 11.7743L30.8168 10.3092L30.1124 14.4226H29.887Z" fill="#89CFBA" />
+            </svg>
+            <svg class="intro-result-star intro-result-star3" viewBox="0 0 19 34" fill="none">
+              <path class="intro-star-piece" d="M5.88703 14.4226L5.18268 10.3092L1.26651 11.7743L1.15381 11.577L4.36564 8.90052L1.15381 6.25217L1.26651 6.05496L5.18268 7.49183L5.88703 3.37844H6.11242L6.81677 7.49183L10.7329 6.05496L10.8456 6.25217L7.63381 8.90052L10.8456 11.577L10.7329 11.7743L6.81677 10.3092L6.11242 14.4226H5.88703Z" fill="#D1EFE6" />
+              <circle class="intro-star-ring" cx="16.5" cy="24.4999" r="2" stroke="#89CFBA" />
+              <circle class="intro-star-dot" cx="10.4674" cy="32.4673" r="1.46739" fill="#89CFBA" />
+            </svg>
+          </div>
+          <div class="intro-sparkles" aria-hidden="true">
+            <img class="intro-word intro-word-somo" src="./assets/hero-somo.svg?v=5" alt="" />
+            <img class="intro-word intro-word-with" src="./assets/hero-with.svg?v=5" alt="" />
+            <img class="intro-word intro-word-you" src="./assets/hero-you.svg?v=5" alt="" />
+            <svg class="intro-sparkle intro-sparkle-a" viewBox="0 0 18 18">
+              <path d="M9 0.7L10.8 6.2L16.6 6.2L11.9 9.6L13.7 15.2L9 11.8L4.3 15.2L6.1 9.6L1.4 6.2L7.2 6.2L9 0.7Z" fill="white" />
+            </svg>
+            <svg class="intro-sparkle intro-sparkle-b" viewBox="0 0 16 16">
+              <path d="M8 0.9L9.2 5.6L14 4.5L10.4 8L14 11.5L9.2 10.4L8 15.1L6.8 10.4L2 11.5L5.6 8L2 4.5L6.8 5.6L8 0.9Z" fill="white" />
+            </svg>
+            <svg class="intro-sparkle intro-sparkle-c" viewBox="0 0 18 18">
+              <path d="M9 0.7L10.8 6.2L16.6 6.2L11.9 9.6L13.7 15.2L9 11.8L4.3 15.2L6.1 9.6L1.4 6.2L7.2 6.2L9 0.7Z" fill="white" />
+            </svg>
+            <span class="intro-dot intro-dot-a"></span>
+            <span class="intro-dot intro-dot-b"></span>
+            <span class="intro-dot intro-dot-c"></span>
+            <span class="intro-dot intro-dot-d"></span>
+          </div>
+          <div class="intro-copy">
+            <div>今天的心情</div>
+            <div>也许藏在某个细节里</div>
+          </div>
+        </div>
+        <div class="water-wash" aria-hidden="true">
+          <span class="wash-glow"></span>
+          <span class="wash-image-glow"></span>
+          <span class="wash-layer wash-white"></span>
+          <span class="wash-layer wash-white-soft"></span>
+          <span class="wash-layer wash-pale"></span>
+          <span class="wash-layer wash-white-thin"></span>
+          <span class="wash-layer wash-mint"></span>
+          <span class="wash-layer wash-final"></span>
+        </div>
+        <div class="choice-panel">
+          <div class="question select-question" id="selectQuestion">如果只能带一样物品上车，你会带什么?..~ ʚ+</div>
+          <div class="options" id="options"></div>
+          <button class="confirm" id="confirmButton" type="button">选好了</button>
+        </div>
+      </section>
+
+      <section class="screen screen-result" id="resultScreen">
+        <div class="result-hero">
+          <div class="hero-decor" aria-hidden="true">
+            <img class="hero-word hero-somo" src="./assets/hero-somo.svg?v=5" alt="" />
+            <img class="hero-word hero-with" src="./assets/hero-with.svg?v=5" alt="" />
+            <img class="hero-word hero-you" src="./assets/hero-you.svg?v=5" alt="" />
+          </div>
+        </div>
+        <div class="result-panel">
+          <div class="result-art">
+            <img class="result-decoration" src="./assets/result-decoration-lines.svg" alt="" aria-hidden="true" />
+            <svg class="result-star result-star1" viewBox="0 0 20 33" fill="none" aria-hidden="true">
+              <path class="sparkle-piece sparkle-a" d="M6.37424 6.81422L8.05239 9.04814L10.8061 8.57466L11.9907 8.37046L11.3009 9.3543L9.69435 11.6411L10.997 14.1132L11.5565 15.1776L10.4077 14.8243L7.73654 14.0046L5.78695 16.0062L4.94889 16.8677L4.92863 15.6653L4.8834 12.8716L2.37718 11.6367L1.29969 11.1049L2.43684 10.7153L5.07878 9.8087L5.47923 7.04314L5.65184 5.85391L6.37424 6.81422Z" fill="#89CFBA" stroke="#D1EFE6" />
+              <circle class="sparkle-dot sparkle-b" cx="3.08214" cy="31.4674" r="1.46739" fill="#89CFBA" />
+              <circle class="sparkle-dot sparkle-c" cx="18.0821" cy="1.46739" r="1.46739" fill="#D1EFE6" />
+            </svg>
+            <div class="result-title">
+              <span id="resultTitle">旧车票</span>
+              <svg class="result-star2" viewBox="0 0 50 27" fill="none" aria-hidden="true">
+                <path class="sparkle-piece sparkle-d" d="M10.833 12.7634L13.8687 15.106L17.3389 13.4748L16.049 17.0858L18.6728 19.8821L14.8399 19.7712L12.9912 23.1306L11.9122 19.4511L8.14598 18.731L11.312 16.5678L10.833 12.7634Z" fill="#D1EFE6" />
+                <circle class="sparkle-ring sparkle-e" cx="2.5" cy="24.5" r="2" stroke="#89CFBA" />
+                <circle class="sparkle-dot sparkle-f" cx="48.4674" cy="17.4674" r="1.46739" fill="#89CFBA" />
+                <path class="sparkle-piece sparkle-g" d="M29.887 14.4226L29.1827 10.3092L25.2665 11.7743L25.1538 11.577L28.3656 8.90052L25.1538 6.25217L25.2665 6.05496L29.1827 7.49183L29.887 3.37844H30.1124L30.8168 7.49183L34.7329 6.05496L34.8456 6.25217L31.6338 8.90052L34.8456 11.577L34.7329 11.7743L30.8168 10.3092L30.1124 14.4226H29.887Z" fill="#89CFBA" />
+              </svg>
+            </div>
+            <svg class="result-star result-star3" viewBox="0 0 19 34" fill="none" aria-hidden="true">
+              <path class="sparkle-piece sparkle-h" d="M5.88703 14.4226L5.18268 10.3092L1.26651 11.7743L1.15381 11.577L4.36564 8.90052L1.15381 6.25217L1.26651 6.05496L5.18268 7.49183L5.88703 3.37844H6.11242L6.81677 7.49183L10.7329 6.05496L10.8456 6.25217L7.63381 8.90052L10.8456 11.577L10.7329 11.7743L6.81677 10.3092L6.11242 14.4226H5.88703Z" fill="#D1EFE6" />
+              <circle class="sparkle-ring sparkle-i" cx="16.5" cy="24.4999" r="2" stroke="#89CFBA" />
+              <circle class="sparkle-dot sparkle-j" cx="10.4674" cy="32.4673" r="1.46739" fill="#89CFBA" />
+            </svg>
+            <img class="result-image" id="resultImage" alt="" />
+            <div class="result-stamp">test.2026</div>
+          </div>
+          <p class="result-copy" id="resultCopy">
+            你可能正在，一边往前走，一边舍不得回头看。这个选择像是在提醒你——你带着过去的某段路，才觉得踏实。
+            你最近也许更需要，谢谢那段路，然后轻一点上车。 留着旧车票的人，多半重感情。它证明你真的去过、爱过、认真过。
+          </p>
+          <div class="actions">
+            <button class="pill" id="backButton" type="button">再测一次</button>
+            <button class="pill" id="shareButton" type="button">分享结果</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="question question-flight" id="questionFlight">如果只能带一样物品上车，你会带什么?..~ ʚ+</div>
+      <div class="toast" id="toast">已准备分享截图</div>
+    </main>
+
+    <script src="./data/items.js?v=2"></script>
+    <script src="./data/questions.js?v=16"></script>
+    <script src="./script.js?v=28"></script>
+  </body>
+</html>
